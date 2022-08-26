@@ -193,7 +193,6 @@
               </div>
               </form>
             </div>
-            <!-- /.card -->
           </div>
         </div>
       </div>
