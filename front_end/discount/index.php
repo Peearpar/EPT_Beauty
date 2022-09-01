@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
 <html lang="en">
 
 <head>
@@ -11,11 +7,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <title>EPT Beauty</title>
 
     <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="admin/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="../admin/plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="admin/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="../admin/dist/css/adminlte.min.css">
     <!-- My style -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 
 <body class="hold-transition layout-top-nav">
@@ -33,20 +29,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </button>
 
                 <div class="collapse navbar-collapse order-3" id="navbarCollapse">
-
                     <!-- Left navbar links -->
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a href="index.php" class="nav-link">Home</a>
+                            <a href="../index.php" class="nav-link">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a href="new_product/index.php" class="nav-link">NewProduct</a>
+                            <a href="../new_product/index.php" class="nav-link">NewProduct</a>
                         </li>
                         <li class="nav-item">
-                            <a href="bestseller/index.php" class="nav-link">BestSeller</a>
+                            <a href="../bestseller/index.php" class="nav-link">BestSeller</a>
                         </li>
                         <li class="nav-item">
-                            <a href="discount/index.php" class="nav-link">Discount</a>
+                            <a href="index.php" class="nav-link">Discount</a>
                         </li>
                     </ul>
 
@@ -66,14 +61,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <!-- Right navbar links -->
                 <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-5">
                     <li class="nav-item d-flex" id="not_login">
-                        <a class="nav-link pr-1" href="login">
+                        <a class="nav-link pr-1" href="../login">
                             <i class="fa fa-user"></i>
                             Login
                         </a>
                         <a class="nav-link pl-1 pr-1">
                             |
                         </a>
-                        <a class="nav-link pl-1" href="register">
+                        <a class="nav-link pl-1" href="../register">
                             Register
                         </a>
                     </li>
@@ -110,14 +105,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </ul>
             </div>
         </nav>
-        <!-- /.navbar -->
 
         <!-- Content Header (Page header) -->
         <div class="content-header">
             <div class="container">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Home</h1>
+                        <h1 class="m-0">Discount</h1>
                     </div>
                 </div>
             </div>
@@ -126,54 +120,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <div class="container">
-                <div class="row mb-2 justify-content-center">
-                    <div id="carouselExampleIndicators" class="carousel slide col-10 mt-2" data-ride="carousel">
-                        <ol class="carousel-indicators">
-                            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                        </ol>
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img class="d-block w-100" src="images/slide4.webp" alt="First slide">
-                            </div>
-                            <div class="carousel-item">
-                                <img class="d-block w-100" src="images/slide5.webp" alt="Second slide">
-                            </div>
-                            <div class="carousel-item">
-                                <img class="d-block w-100" src="images/slide6.jpeg" alt="Third slide">
-                            </div>
-                        </div>
-                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <!-- Recommend BestSeller of the month Contains page -->
-            <div class="container-fluid bg-dark mt-5">
-                <div class="container">
-                    <div class="row mb-3">
-                        <div class="col-12">
-                            <h3 class="m-2">Best Seller of The Month</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="container">
                 <div class="row mb-2 justify-content-around">
                     <div class="card mt-4" style="width: 14rem;">
                         <div class="ribbon-wrapper ribbon-lg">
-                            <div class="ribbon  bg-secondary">
-                                Best Seller
+                            <div class="ribbon bg-danger">
+                            Discount
                             </div>
                         </div>
-                        <img src="images/VitaminC.jpeg" class="card-img-top" alt="">
+                        <img src="../images/VitaminC.jpeg" class="card-img-top" alt="">
                         <div class="card-body">
                             <p class="card-text">฿2,500</p>
                             <p class="card-text">BOBBI BROWN Vitamin Enriched Face Base 50 ml.</p>
@@ -184,11 +138,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
                     <div class="card mt-4" style="width: 14rem;">
                         <div class="ribbon-wrapper ribbon-lg">
-                            <div class="ribbon  bg-secondary">
-                                Best Seller
+                            <div class="ribbon bg-danger">
+                            Discount
                             </div>
                         </div>
-                        <img src="images/HydratingWaterFreshCream.jpeg" class="card-img-top" alt="">
+                        <img src="../images/HydratingWaterFreshCream.jpeg" class="card-img-top" alt="">
                         <div class="card-body">
                             <p class="card-text">฿2,400</p>
                             <p class="card-text">BOBBI BROWN Hydrating Water Fresh Cream 50 ml.</p>
@@ -199,11 +153,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
                     <div class="card mt-4" style="width: 14rem;">
                         <div class="ribbon-wrapper ribbon-lg">
-                            <div class="ribbon  bg-secondary">
-                                Best Seller
+                            <div class="ribbon bg-danger">
+                            Discount
                             </div>
                         </div>
-                        <img src="images/EXTRA REPAIR SERUM.webp" class="card-img-top" alt="">
+                        <img src="../images/EXTRA REPAIR SERUM.webp" class="card-img-top" alt="">
                         <div class="card-body">
                             <p class="card-text">฿4,500</p>
                             <p class="card-text">BOBBI BROWN EXTRA REPAIR SERUM 100 ml.</p>
@@ -214,11 +168,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
                     <div class="card mt-4" style="width: 14rem;">
                         <div class="ribbon-wrapper ribbon-lg">
-                            <div class="ribbon  bg-secondary">
-                                Best Seller
+                            <div class="ribbon bg-danger">
+                            Discount
                             </div>
                         </div>
-                        <img src="images/Soothing Cleansing Oil.webp" class="card-img-top" alt="">
+                        <img src="../images/Soothing Cleansing Oil.webp" class="card-img-top" alt="">
                         <div class="card-body">
                             <p class="card-text">฿2,150</p>
                             <p class="card-text">BOBBI BROWN Soothing Cleansing Oil 200 ml.</p>
@@ -230,8 +184,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </div>
             </div>
         </div>
-
-
     </div>
 
     <!-- Control Sidebar -->
@@ -249,18 +201,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Default to the left -->
         <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
     </footer>
-
-
     <!-- ./wrapper -->
 
     <!-- REQUIRED SCRIPTS -->
 
     <!-- jQuery -->
-    <script src="admin/plugins/jquery/jquery.min.js"></script>
+    <script src="../admin/plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->
-    <script src="admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
-    <script src="admin/dist/js/adminlte.min.js"></script>
+    <script src="../admin/dist/js/adminlte.min.js"></script>
 
     <script>
         $(function() { 
@@ -286,7 +236,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         });
 
         /////function fix nav bar ให้ตามลงมาด้านล่างเสมอ
-        function myFunction() {
+        function myFunction() { 
             var nav = document.getElementsByClassName('main-header')[0];
             var contentHeader = document.getElementsByClassName('content-header')[0];
             var fixed = contentHeader.offsetTop + contentHeader.offsetHeight;
@@ -300,7 +250,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         }
 
         ///// ทำการเชคcookie ก่อน ว่ามีมั้ย และลบทิ้ง
-        function deleteCookie(name, path, domain) {
+        function deleteCookie(name, path, domain) {  
             if (getCookie(name)) {
                 document.cookie = name + "=" +
                     ((path) ? ";path=" + path : "") +
@@ -324,8 +274,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         }
     </script>
 
-
-
+    
 </body>
 
 </html>
