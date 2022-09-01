@@ -11,7 +11,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <title>EPT Beauty</title>
 
     <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="../admin/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="../fontawesome/css/all.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="../admin/dist/css/adminlte.min.css">
     <!-- My style -->
@@ -106,6 +106,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </a>
                         </div>
                     </li>
+                    <a class="nav-link" id="cart" href="../cart/index.php">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span class="badge badge-danger navbar-badge">3</span>
+                    </a>
                 </ul>
             </div>
         </nav>
@@ -219,7 +223,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="../admin/dist/js/adminlte.min.js"></script>
 
     <script>
-        $(function() { 
+        $(function() {
             window.onscroll = function() { ////// ให้ nav bar เลื่อนตามลงมา
                 myFunction()
             };
@@ -231,7 +235,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             } else {
                 $('#is_login').remove(); ///// ถ้าไม่มี token ให้ลบ is_login แทน
             }
-            $('#logout').click(() => {  ////ถ้าเกิดการคลิก Selecter ตัว logout ให้ทำการลบคุกกี้ทิ้ง แล้ว reload หน้่าใหม่ (Jquery)
+            $('#logout').click(() => { ////ถ้าเกิดการคลิก Selecter ตัว logout ให้ทำการลบคุกกี้ทิ้ง แล้ว reload หน้่าใหม่ (Jquery)
                 deleteCookie('token', '/');
                 deleteCookie('name', '/');
                 deleteCookie('email', '/');
@@ -242,7 +246,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         });
 
         /////function fix nav bar ให้ตามลงมาด้านล่างเสมอ
-        function myFunction() { 
+        function myFunction() {
             var nav = document.getElementsByClassName('main-header')[0];
             var contentHeader = document.getElementsByClassName('content-header')[0];
             var fixed = contentHeader.offsetTop + contentHeader.offsetHeight;
@@ -256,7 +260,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         }
 
         ///// ทำการเชคcookie ก่อน ว่ามีมั้ย และลบทิ้ง
-        function deleteCookie(name, path, domain) {  
+        function deleteCookie(name, path, domain) {
             if (getCookie(name)) {
                 document.cookie = name + "=" +
                     ((path) ? ";path=" + path : "") +
@@ -265,7 +269,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             }
         }
 
-        function getCookie(name) {   /////เป็นfunction ที่หั่น cookie เป็น key และ value แล้วค่อยแบ่ง value ออกมาตาม key อีกที
+        function getCookie(name) { /////เป็นfunction ที่หั่น cookie เป็น key และ value แล้วค่อยแบ่ง value ออกมาตาม key อีกที
             const cookieValue = document.cookie
                 .split('; ')
                 .find((row) => row.startsWith(name + '='))
@@ -275,7 +279,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         }
 
         ////// ใส่ comma ให้ตัวเลข
-        function numberFormat(num) { 
+        function numberFormat(num) {
             return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
     </script>

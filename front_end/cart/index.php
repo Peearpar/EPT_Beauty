@@ -33,6 +33,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </button>
 
                 <div class="collapse navbar-collapse order-3" id="navbarCollapse">
+
                     <!-- Left navbar links -->
                     <ul class="navbar-nav">
                         <li class="nav-item">
@@ -42,7 +43,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <a href="../new_product/index.php" class="nav-link">NewProduct</a>
                         </li>
                         <li class="nav-item">
-                            <a href="index.php" class="nav-link">BestSeller</a>
+                            <a href="../bestseller/index.php" class="nav-link">BestSeller</a>
                         </li>
                         <li class="nav-item">
                             <a href="../discount/index.php" class="nav-link">Discount</a>
@@ -65,14 +66,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <!-- Right navbar links -->
                 <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-5">
                     <li class="nav-item d-flex" id="not_login">
-                        <a class="nav-link pr-1" href="../login">
+                        <a class="nav-link pr-1" href="login">
                             <i class="fa fa-user"></i>
                             Login
                         </a>
                         <a class="nav-link pl-1 pr-1">
                             |
                         </a>
-                        <a class="nav-link pl-1" href="../register">
+                        <a class="nav-link pl-1" href="register">
                             Register
                         </a>
                     </li>
@@ -106,7 +107,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </a>
                         </div>
                     </li>
-                    <a class="nav-link" id="cart" href="../cart/index.php">
+                    <a class="nav-link" id="cart" href="index.php">
                         <i class="fa-solid fa-cart-shopping"></i>
                         <span class="badge badge-danger navbar-badge">3</span>
                     </a>
@@ -120,7 +121,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="container">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">BestSeller</h1>
+                        <h1 class="m-0">SHOPPING CART</h1>
                     </div>
                 </div>
             </div>
@@ -129,68 +130,55 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <div class="container">
-                <div class="row mb-2 justify-content-around">
-                    <div class="card mt-4" style="width: 14rem;">
-                        <div class="ribbon-wrapper ribbon-lg">
-                            <div class="ribbon bg-warning">
-                                Best Seller
+                <div class="content d-flex justify-content-center pt-2">
+                    <div class="cart_list">
+                        <div class="d-flex cart bg-primary mr-5 p-3">
+                            <div class="cart_img d-flex justify-content-center">
+                                <img src="../images/VitaminC.jpeg" alt="productimages" class="mr-3">
                             </div>
+                            <div class="mr-3">
+                                <p>BOBBI BROWN</p>
+                                <p>Vitamin Enriched Face Base 50 ml.</p>
+                            </div>
+
+                            <div class="mr-3 d-flex flex-column align-self-center">
+                                <div class="btn-group w-50 mb-3">
+                                    <button type="button" class="btn btn-dark minus">-</button>
+                                    <div class="div form-control">1</div>
+                                    <button type="button" class="btn btn-dark plus">+</button>
+                                </div>
+                                <button type="button" class="btn btn-danger">Delete</button>
+                            </div>
+                            <h4 class="mr-3 price">฿2,500</h4>
+                            <h3 class="price_sum">฿2,500</h3>
                         </div>
-                        <img src="../images/VitaminC.jpeg" class="card-img-top" alt="">
-                        <div class="card-body">
-                            <p class="card-text">฿2,500</p>
-                            <p class="card-text">BOBBI BROWN Vitamin Enriched Face Base 50 ml.</p>
-                        </div>
-                        <div class="card-footer">
-                            <button class="btn btn-block btn-outline-dark">Buy</button>
+                        <div class="d-flex cart bg-primary mr-5 p-3">
+                            <div class="cart_img d-flex justify-content-center">
+                                <img src="../images/VitaminC.jpeg" alt="productimages" class="mr-3">
+                            </div>
+                            <div class="mr-3">
+                                <p>BOBBI BROWN</p>
+                                <p>Vitamin Enriched Face Base 50 ml.</p>
+                            </div>
+
+                            <div class="mr-3 d-flex flex-column align-self-center">
+                                <div class="btn-group w-50 mb-3">
+                                    <button type="button" class="btn btn-dark minus">-</button>
+                                    <div class="div form-control">1</div>
+                                    <button type="button" class="btn btn-dark plus">+</button>
+                                </div>
+                                <button type="button" class="btn btn-danger">Delete</button>
+                            </div>
+                            <h4 class="mr-3 price">฿2,500</h4>
+                            <h3 class="price_sum">฿2,500</h3>
                         </div>
                     </div>
-                    <div class="card mt-4" style="width: 14rem;">
-                        <div class="ribbon-wrapper ribbon-lg">
-                            <div class="ribbon bg-warning">
-                                Best Seller
-                            </div>
-                        </div>
-                        <img src="../images/HydratingWaterFreshCream.jpeg" class="card-img-top" alt="">
-                        <div class="card-body">
-                            <p class="card-text">฿2,400</p>
-                            <p class="card-text">BOBBI BROWN Hydrating Water Fresh Cream 50 ml.</p>
-                        </div>
-                        <div class="card-footer">
-                            <button class="btn btn-block btn-outline-dark">Buy</button>
-                        </div>
-                    </div>
-                    <div class="card mt-4" style="width: 14rem;">
-                        <div class="ribbon-wrapper ribbon-lg">
-                            <div class="ribbon bg-warning">
-                                Best Seller
-                            </div>
-                        </div>
-                        <img src="../images/EXTRA REPAIR SERUM.webp" class="card-img-top" alt="">
-                        <div class="card-body">
-                            <p class="card-text">฿4,500</p>
-                            <p class="card-text">BOBBI BROWN EXTRA REPAIR SERUM 100 ml.</p>
-                        </div>
-                        <div class="card-footer">
-                            <button class="btn btn-block btn-outline-dark">Buy</button>
-                        </div>
-                    </div>
-                    <div class="card mt-4" style="width: 14rem;">
-                        <div class="ribbon-wrapper ribbon-lg">
-                            <div class="ribbon bg-warning">
-                                Best Seller
-                            </div>
-                        </div>
-                        <img src="../images/Soothing Cleansing Oil.webp" class="card-img-top" alt="">
-                        <div class="card-body">
-                            <p class="card-text">฿2,150</p>
-                            <p class="card-text">BOBBI BROWN Soothing Cleansing Oil 200 ml.</p>
-                        </div>
-                        <div class="card-footer">
-                            <button class="btn btn-block btn-outline-dark">Buy</button>
-                        </div>
+
+                    <div class="submit bg-dark">
+                        <h1>submit</h1>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -210,6 +198,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Default to the left -->
         <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
     </footer>
+
+
     <!-- ./wrapper -->
 
     <!-- REQUIRED SCRIPTS -->
@@ -242,7 +232,35 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                 location.reload();
             });
+
+            $(".minus").click(function(index) {
+                let temp = parseInt($(this).parent().children('div').text()) - 1;
+                if (temp > 0) {
+                    $(this).parent().children('div').html(temp);
+                    let price = $(this).parent().parent().parent().children('.price').text();
+                    price = toNumber(price);
+                    let priceSum = $(this).parent().parent().parent().children('.price_sum');
+                    priceSum.html('฿' + numberFormat(price * temp));
+                }
+            });
+
+            $(".plus").click(function(index) {
+                let temp = parseInt($(this).parent().children('div').text()) + 1;
+                $(this).parent().children('div').html(temp);
+                let price = $(this).parent().parent().parent().children('.price').text();
+                price = toNumber(price);
+                let priceSum = $(this).parent().parent().parent().children('.price_sum');
+                priceSum.html('฿' + numberFormat(price * temp));
+            });
         });
+
+        function toNumber(str) {
+            const paragraph = str;
+            const regex = /\d/g;
+            const number = paragraph.match(regex);
+
+            return parseInt(number.join(''));
+        }
 
         /////function fix nav bar ให้ตามลงมาด้านล่างเสมอ
         function myFunction() {
@@ -282,6 +300,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
             return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
     </script>
+
+
+
 </body>
 
 </html>
