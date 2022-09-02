@@ -1,22 +1,14 @@
 
+/* กำหนดรูปภาพที่มีขนาดเท่ากันทั้งหมด */
+.card-img-top { 
+    object-fit: contain;
+    aspect-ratio: 1/1;
+}
+
+/* กำหนดขนาดสไล์ดหน้าHome */
 .carousel-item img {
     object-fit: contain;
     aspect-ratio: 16/9;
-}
-
-.cart_img{
-    width: 200px;
-}
-
-.cart_img img{
-    object-fit: contain;
-    aspect-ratio: 4/3;
-    width: 100%;
-}
-
-.cart p{
-    font-size: medium;
-    margin-bottom: 5px;
 }
 
 

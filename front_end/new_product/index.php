@@ -77,7 +77,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </a>
                     </li>
                     <!-- Login Dropdowm Menu -->
-                    <li class="nav-item dropdown" id="is_login">
+                <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-5" id="is_login">
+                    <li class="nav-item dropdown">
                         <a class="nav-link" data-toggle="dropdown" id="d_name" href="#">
                             <i class="fa fa-user"></i>
                             Peearpar
@@ -106,10 +107,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </a>
                         </div>
                     </li>
-                    <a class="nav-link" id="cart" href="../cart/index.php">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                        <span class="badge badge-danger navbar-badge">3</span>
-                    </a>
+                    <li class="nav-item">
+                        <a class="nav-link" id="cart" href="../cart/index.php">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            <span class="badge badge-danger navbar-badge">3</span>
+                        </a>
+                    </li>
+                </ul>
                 </ul>
             </div>
         </nav>
@@ -139,7 +143,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <img src="../images/VitaminC.jpeg" class="card-img-top" alt="">
                         <div class="card-body">
                             <p class="card-text">฿2,500</p>
-                            <p class="card-text">BOBBI BROWN Vitamin Enriched Face Base 50 ml.</p>
+                            <p class="card-text">BOBBI BROWN</p>
+                            <p>Vitamin Enriched Face Base 50 ml.</p>
                         </div>
                         <div class="card-footer">
                             <button class="btn btn-block btn-outline-dark">Buy</button>
@@ -154,7 +159,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <img src="../images/HydratingWaterFreshCream.jpeg" class="card-img-top" alt="">
                         <div class="card-body">
                             <p class="card-text">฿2,400</p>
-                            <p class="card-text">BOBBI BROWN Hydrating Water Fresh Cream 50 ml.</p>
+                            <p class="card-text">BOBBI BROWN</p>
+                            <p>Hydrating Water Fresh Cream 50 ml.</p>
                         </div>
                         <div class="card-footer">
                             <button class="btn btn-block btn-outline-dark">Buy</button>
@@ -169,7 +175,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <img src="../images/EXTRA REPAIR SERUM.webp" class="card-img-top" alt="">
                         <div class="card-body">
                             <p class="card-text">฿4,500</p>
-                            <p class="card-text">BOBBI BROWN EXTRA REPAIR SERUM 100 ml.</p>
+                            <p class="card-text">BOBBI BROWN</p>
+                            <p>EXTRA REPAIR SERUM 100 ml.</p>
                         </div>
                         <div class="card-footer">
                             <button class="btn btn-block btn-outline-dark">Buy</button>
@@ -184,7 +191,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <img src="../images/Soothing Cleansing Oil.webp" class="card-img-top" alt="">
                         <div class="card-body">
                             <p class="card-text">฿2,150</p>
-                            <p class="card-text">BOBBI BROWN Soothing Cleansing Oil 200 ml.</p>
+                            <p class="card-text">BOBBI BROWN</p>
+                            <p>Soothing Cleansing Oil 200 ml.</p>
                         </div>
                         <div class="card-footer">
                             <button class="btn btn-block btn-outline-dark">Buy</button>

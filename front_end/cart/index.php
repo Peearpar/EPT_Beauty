@@ -16,6 +16,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="../admin/dist/css/adminlte.min.css">
     <!-- My style -->
     <link rel="stylesheet" href="../css/style.css">
+    <!-- My cart style -->
+    <link rel="stylesheet" href="css/cart-style.css">
 </head>
 
 <body class="hold-transition layout-top-nav">
@@ -66,51 +68,55 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <!-- Right navbar links -->
                 <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-5">
                     <li class="nav-item d-flex" id="not_login">
-                        <a class="nav-link pr-1" href="login">
+                        <a class="nav-link pr-1" href="../login">
                             <i class="fa fa-user"></i>
                             Login
                         </a>
                         <a class="nav-link pl-1 pr-1">
                             |
                         </a>
-                        <a class="nav-link pl-1" href="register">
+                        <a class="nav-link pl-1" href="../register">
                             Register
                         </a>
                     </li>
                     <!-- Login Dropdowm Menu -->
-                    <li class="nav-item dropdown" id="is_login">
-                        <a class="nav-link" data-toggle="dropdown" id="d_name" href="#">
-                            <i class="fa fa-user"></i>
-                            Peearpar
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                            <a href="#" class="dropdown-item bg-dark">
-                                <div class="media">
-                                    <div class="media-body">
-                                        <p class="text-sm" id="d_email">phusit_sawat@hotmail.com</p>
-                                    </div>
-                                </div>
+                    <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-5" id="is_login">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" data-toggle="dropdown" id="d_name" href="#">
+                                <i class="fa fa-user"></i>
+                                Peearpar
                             </a>
-                            <a href="#" class="dropdown-item">
-                                <div class="media">
-                                    <div class="media-body">
-                                        <p class="text-sm" id="d_credit">credit: 0</p>
+                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                                <a href="#" class="dropdown-item bg-dark">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <p class="text-sm" id="d_email">phusit_sawat@hotmail.com</p>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
-                            <a href="#" class="dropdown-item" id="logout">
-                                <div class="media">
-                                    <div class="media-body">
-                                        <p class="text-sm">Log out</p>
+                                </a>
+                                <a href="#" class="dropdown-item">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <p class="text-sm" id="d_credit">credit: 0</p>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
+                                <a href="#" class="dropdown-item" id="logout">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <p class="text-sm">Log out</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="cart" href="cart/index.php">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                                <span class="badge badge-danger navbar-badge">3</span>
                             </a>
-                        </div>
-                    </li>
-                    <a class="nav-link" id="cart" href="index.php">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                        <span class="badge badge-danger navbar-badge">3</span>
-                    </a>
+                        </li>
+                    </ul>
                 </ul>
             </div>
         </nav>
@@ -130,52 +136,110 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <div class="container">
-                <div class="content d-flex justify-content-center pt-2">
-                    <div class="cart_list">
-                        <div class="d-flex cart bg-primary mr-5 p-3">
-                            <div class="cart_img d-flex justify-content-center">
+                <div class="content d-flex justify-content-center pt-2 pb-5">
+                    <div class="cart_list d-flex flex-column align-self-center">
+                        <div class="d-flex cart bg-white mr-5 mt-3 p-3">
+                            <div class="cart_img align-self-center d-flex justify-content-center">
                                 <img src="../images/VitaminC.jpeg" alt="productimages" class="mr-3">
                             </div>
-                            <div class="mr-3">
+
+                            <div class="mr-5 align-self-center product-text">
                                 <p>BOBBI BROWN</p>
                                 <p>Vitamin Enriched Face Base 50 ml.</p>
                             </div>
 
-                            <div class="mr-3 d-flex flex-column align-self-center">
+                            <div class="mr-5 d-flex flex-column align-self-center btn-tools">
+                                <button type="button" class="btn btn-success mb-3 d-none">Confirm</button>
                                 <div class="btn-group w-50 mb-3">
                                     <button type="button" class="btn btn-dark minus">-</button>
-                                    <div class="div form-control">1</div>
+                                    <div class="product-count form-control">1</div>
                                     <button type="button" class="btn btn-dark plus">+</button>
                                 </div>
                                 <button type="button" class="btn btn-danger">Delete</button>
                             </div>
-                            <h4 class="mr-3 price">฿2,500</h4>
-                            <h3 class="price_sum">฿2,500</h3>
+                            <h6 class="mr-5 price align-self-center price-1">฿2,500</h6>
+                            <h3 class="price_sum align-self-center">฿2,500</h3>
                         </div>
-                        <div class="d-flex cart bg-primary mr-5 p-3">
-                            <div class="cart_img d-flex justify-content-center">
+                        <div class="d-flex cart bg-white mr-5 mt-3 p-3">
+                            <div class="cart_img align-self-center d-flex justify-content-center">
                                 <img src="../images/VitaminC.jpeg" alt="productimages" class="mr-3">
                             </div>
-                            <div class="mr-3">
+
+                            <div class="mr-5 align-self-center product-text">
                                 <p>BOBBI BROWN</p>
                                 <p>Vitamin Enriched Face Base 50 ml.</p>
                             </div>
 
-                            <div class="mr-3 d-flex flex-column align-self-center">
+                            <div class="mr-5 d-flex flex-column align-self-center btn-tools">
+                                <button type="button" class="btn btn-success mb-3 d-none">Confirm</button>
                                 <div class="btn-group w-50 mb-3">
                                     <button type="button" class="btn btn-dark minus">-</button>
-                                    <div class="div form-control">1</div>
+                                    <div class="product-count form-control">1</div>
                                     <button type="button" class="btn btn-dark plus">+</button>
                                 </div>
                                 <button type="button" class="btn btn-danger">Delete</button>
                             </div>
-                            <h4 class="mr-3 price">฿2,500</h4>
-                            <h3 class="price_sum">฿2,500</h3>
+                            <h6 class="mr-5 price align-self-center price-1">฿2,500</h6>
+                            <h3 class="price_sum align-self-center">฿2,500</h3>
+                        </div>
+                        <div class="d-flex cart bg-white mr-5 mt-3 p-3">
+                            <div class="cart_img align-self-center d-flex justify-content-center">
+                                <img src="../images/VitaminC.jpeg" alt="productimages" class="mr-3">
+                            </div>
+
+                            <div class="mr-5 align-self-center product-text">
+                                <p>BOBBI BROWN</p>
+                                <p>Vitamin Enriched Face Base 50 ml.</p>
+                            </div>
+
+                            <div class="mr-5 d-flex flex-column align-self-center btn-tools">
+                                <button type="button" class="btn btn-success mb-3 d-none">Confirm</button>
+                                <div class="btn-group w-50 mb-3">
+                                    <button type="button" class="btn btn-dark minus">-</button>
+                                    <div class="product-count form-control">1</div>
+                                    <button type="button" class="btn btn-dark plus">+</button>
+                                </div>
+                                <button type="button" class="btn btn-danger">Delete</button>
+                            </div>
+                            <h6 class="mr-5 price align-self-center price-1">฿2,500</h6>
+                            <h3 class="price_sum align-self-center">฿2,500</h3>
+                        </div>
+                        <div class="d-flex cart bg-white mr-5 mt-3 p-3">
+                            <div class="cart_img align-self-center d-flex justify-content-center">
+                                <img src="../images/VitaminC.jpeg" alt="productimages" class="mr-3">
+                            </div>
+
+                            <div class="mr-5 align-self-center product-text">
+                                <p>BOBBI BROWN</p>
+                                <p>Vitamin Enriched Face Base 50 ml.</p>
+                            </div>
+
+                            <div class="mr-5 d-flex flex-column align-self-center btn-tools">
+                                <button type="button" class="btn btn-success mb-3 d-none">Confirm</button>
+                                <div class="btn-group w-50 mb-3">
+                                    <button type="button" class="btn btn-dark minus">-</button>
+                                    <div class="product-count form-control">1</div>
+                                    <button type="button" class="btn btn-dark plus">+</button>
+                                </div>
+                                <button type="button" class="btn btn-danger">Delete</button>
+                            </div>
+                            <h6 class="mr-5 price align-self-center price-1">฿2,500</h6>
+                            <h3 class="price_sum align-self-center">฿2,500</h3>
                         </div>
                     </div>
 
-                    <div class="submit bg-dark">
-                        <h1>submit</h1>
+                    <div class="mt-3 total-content">
+                        <div class="total bg-dark d-flex flex-column">
+                            <div class="d-flex justify-content-between mt-3">
+                                <p>Items</p>
+                                <p id="count-item">4</p>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <p>Total</p>
+                                <p id="amount">฿2,500</p>
+                            </div>
+                            <button type="button" class="btn btn-danger">CHECKOUT</button>
+                        </div>
                     </div>
                 </div>
 
@@ -211,8 +275,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- AdminLTE App -->
     <script src="../admin/dist/js/adminlte.min.js"></script>
 
+    <script src="../js/script.js"></script>
+
     <script>
         $(function() {
+            setInitPriceAndItem()
             window.onscroll = function() { ////// ให้ nav bar เลื่อนตามลงมา
                 myFunction()
             };
@@ -224,13 +291,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
             } else {
                 $('#is_login').remove(); ///// ถ้าไม่มี token ให้ลบ is_login แทน
             }
-            $('#logout').click(() => { ////ถ้าเกิดการคลิก Selecter ตัว logout ให้ทำการลบคุกกี้ทิ้ง แล้ว reload หน้่าใหม่ (Jquery)
+            $('#logout').click(() => { ////ถ้าเกิดการคลิก Selecter ตัว logout ให้ทำการลบคุกกี้ทิ้ง แล้ว ให้กลับไปหน้า Home (Jquery)
                 deleteCookie('token', '/');
                 deleteCookie('name', '/');
                 deleteCookie('email', '/');
                 deleteCookie('credit', '/');
 
-                location.reload();
+                window.location.href = "../";
             });
 
             $(".minus").click(function(index) {
@@ -241,7 +308,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     price = toNumber(price);
                     let priceSum = $(this).parent().parent().parent().children('.price_sum');
                     priceSum.html('฿' + numberFormat(price * temp));
+
+                    let btnConfirm = $(this).parent().parent().children('.btn-success')
+                    if (btnConfirm.hasClass('d-none')) {
+                        btnConfirm.removeClass('d-none');
+                        btnConfirm.addClass('d-block');
+                    }
                 }
+                setInitPriceAndItem();
             });
 
             $(".plus").click(function(index) {
@@ -251,54 +325,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 price = toNumber(price);
                 let priceSum = $(this).parent().parent().parent().children('.price_sum');
                 priceSum.html('฿' + numberFormat(price * temp));
+
+                let btnConfirm = $(this).parent().parent().children('.btn-success')
+                if (btnConfirm.hasClass('d-none')) {
+                    btnConfirm.removeClass('d-none');
+                    btnConfirm.addClass('d-block');
+                }
+                setInitPriceAndItem();
             });
+
+            $('.btn-success').click(function(index) {
+                let btnConfirm = $(this);
+                if (btnConfirm.hasClass('d-block')) {
+                    btnConfirm.removeClass('d-block');
+                    btnConfirm.addClass('d-none');
+                }
+            })
         });
-
-        function toNumber(str) {
-            const paragraph = str;
-            const regex = /\d/g;
-            const number = paragraph.match(regex);
-
-            return parseInt(number.join(''));
-        }
-
-        /////function fix nav bar ให้ตามลงมาด้านล่างเสมอ
-        function myFunction() {
-            var nav = document.getElementsByClassName('main-header')[0];
-            var contentHeader = document.getElementsByClassName('content-header')[0];
-            var fixed = contentHeader.offsetTop + contentHeader.offsetHeight;
-
-            if (window.pageYOffset >= fixed) {
-                console.log(fixed);
-                nav.classList.add("fixed-top")
-            } else {
-                nav.classList.remove("fixed-top");
-            }
-        }
-
-        ///// ทำการเชคcookie ก่อน ว่ามีมั้ย และลบทิ้ง
-        function deleteCookie(name, path, domain) {
-            if (getCookie(name)) {
-                document.cookie = name + "=" +
-                    ((path) ? ";path=" + path : "") +
-                    ((domain) ? ";domain=" + domain : "") +
-                    ";expires=Thu, 01 Jan 1970 00:00:01 GMT";
-            }
-        }
-
-        function getCookie(name) { /////เป็นfunction ที่หั่น cookie เป็น key และ value แล้วค่อยแบ่ง value ออกมาตาม key อีกที
-            const cookieValue = document.cookie
-                .split('; ')
-                .find((row) => row.startsWith(name + '='))
-                ?.split('=')[1];
-
-            return cookieValue
-        }
-
-        ////// ใส่ comma ให้ตัวเลข
-        function numberFormat(num) {
-            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        }
     </script>
 
 
