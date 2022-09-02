@@ -73,8 +73,7 @@
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
-              <a href="../../users" class="nav-link">
-
+              <a href="../" class="nav-link active">
                 <i class="fa-solid fa-box-archive"></i>
                 <p>
                   Products
@@ -110,7 +109,7 @@
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
-              <a href="../" class="nav-link active">
+              <a href="../../users" class="nav-link">
                 <i class="fa-solid fa-users"></i>
                 <p>
                   Users
@@ -131,7 +130,7 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">Edit Users</h1>
+              <h1 class="m-0">New User</h1>
             </div>
           </div>
         </div>
@@ -145,104 +144,153 @@
               <!-- general form elements -->
               <div class="card card-primary">
                 <div class="card-header">
-                  <h3 class="card-title">User id</h3>
+                  <h3 class="card-title">New User</h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form>
+                <form class="needs-validation" method="post">
                   <div class="card-body">
                     <div class="form-group">
                       <div class="form-group">
                         <label for="name">Name</label>
-                        <input type="text" class="form-control" id="name">
+                        <input type="text" class="form-control" id="name" required>
                       </div>
                       <div class="form-group">
                         <label for="surname">Surname</label>
-                        <input type="text" class="form-control" id="surname">
+                        <input type="text" class="form-control" id="surname" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="text" class="form-control" id="email" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" required>
                       </div>
                       <div class="form-group">
                         <label for="district">District</label>
-                        <input type="text" class="form-control" id="district">
+                        <input type="text" class="form-control" id="district" required>
                       </div>
                       <div class="form-group">
                         <label for="sub-district">Sub-District</label>
-                        <input type="text" class="form-control" id="sub-district">
+                        <input type="text" class="form-control" id="sub-district" required>
                       </div>
                       <div class="form-group">
                         <label for="zip_code">Zip_Code</label>
-                        <input type="number" class="form-control" id="zip_code">
+                        <input type="number" class="form-control" id="zip_code" required>
                       </div>
                       <div class="form-group">
                         <label for="address">Address</label>
-                        <input type="text" class="form-control" id="address">
+                        <input type="text" class="form-control" id="address" required>
                       </div>
                       <div class="form-group">
                         <label for="credit">Credit</label>
-                        <input type="number" class="form-control" id="credit">
+                        <input type="number" class="form-control" id="credit" required>
+                      </div>
+                      <div class="form-group">
+                        <label>Role</label>
+                        <select class="custom-select" id="role">
+                          <option>admin</option>
+                          <option>customer</option>
+                        </select>
                       </div>
                     </div>
                   </div>
+                  <div class="card-footer d-flex justify-content-center">
+                    <button id="save" type="submit" class="btn btn-primary w-100 mr-2">Save</button>
+                    <a href="../" class="btn btn-secondary w-100 ml-2">Cancel</a>
+                  </div>
                 </form>
-                <!-- /.card-body -->
-
-                <div class="card-footer d-flex justify-content-center">
-                  <a id="edit" type="submit" class="btn btn-primary w-100 mr-2">Edit</a>
-                  <a href="../" class="btn btn-secondary w-100 ml-2">Cancel</a>
-                </div>
-
               </div>
-              <!-- /.card -->
+              <!-- /.card-body -->
+
+
             </div>
           </div>
         </div>
       </div>
-
-      <!-- Control Sidebar -->
-      <aside class="control-sidebar control-sidebar-dark">
-        <!-- Control sidebar content goes here -->
-      </aside>
-
-
     </div>
 
-    <!-- jQuery -->
-    <script src="../../plugins/jquery/jquery.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- SweetAlert2 -->
-    <script src="../../../sweetalert2/sweetalert2@11.js"></script>
-    <!-- AdminLTE -->
-    <script src="../../dist/js/adminlte.js"></script>
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+    </aside>
 
-    <script>
-      $(function() {
-        var Toast = Swal.mixin({
-          showConfirmButton: false,
-          timer: 2000
-        });
-        $('#edit').click(function() {
-          Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Edit it!'
-          }).then((result) => {
-            if (result.isConfirmed) {
-              Toast.fire(
-                'edit!',
-                'Your file has been edited.',
-                'success'
-              ).then(() => {
-                window.location.href = "../"
-              })
+
+  </div>
+
+  <!-- jQuery -->
+  <script src="../../plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- SweetAlert2 -->
+  <script src="../../../sweetalert2/sweetalert2@11.js"></script>
+  <!-- AdminLTE -->
+  <script src="../../dist/js/adminlte.js"></script>
+
+  <script>
+    $(function() {
+      $("form").submit(function(e) {
+        console.log('xxxx');
+        e.preventDefault();
+        const name = $('#name').val();
+        const surname = $('#surname').val();
+        const address = $('#address').val();
+        const district = $('#district').val();
+        const subdistrict = $('#sub-district').val();
+        const zip_code = $('#zip_code').val();
+        const email = $('#email').val();
+        const password = $('#password').val();
+        const credit = $('#credit').val();
+        const role = $('#role').find(":selected").text();
+
+        $.post("../../../../back_end/register_api/register_admin.php", {
+          name: name,
+          surname: surname,
+          address: address,
+          district: district,
+          sub_district: subdistrict,
+          zip_code: zip_code,
+          email: email,
+          password: password,
+          credit: credit,
+          role: role,
+        }).done(function(data) {
+          console.log(data.is_complete);
+
+          let status = 'success';
+          let message = data.message;
+
+          if (!data.is_complete) {
+            status = 'error';
+
+            if (!$('#email').hasClass('is-invalid')) {
+              $('#email').addClass('is-invalid');
             }
+          } else {
+            if (!$('#email').hasClass('is-invalid')) {
+              $('#email').removeClass('is-invalid');
+            }
+          }
+          var Toast = Swal.mixin({
+            showConfirmButton: false,
+            timer: 2000,
+            icon: status,
+          });
+
+          Toast.fire(
+            message,
+          ).then(() => {
+            // window.location.href = "../"
           })
+        }).fail(function(data) {
+          console.log(data);
         });
+
       });
-    </script>
+
+    });
+  </script>
 </body>
 
 </html>

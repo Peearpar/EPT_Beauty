@@ -79,6 +79,73 @@
 
         return $result;
     }
+
+
+    function insertAdnim(
+        $name,
+        $surname,
+        $email,
+        $password,
+        $district,
+        $sub_district,
+        $zip_code,
+        $address,
+        $credit,
+        $role
+        )
+    {
+        $conn = connection();
+
+        // prepare and bind
+        $stmt = $conn->prepare("INSERT INTO `ept_beauty`.`users`
+        (
+        `name`,
+        `surname`,
+        `email`,
+        `password`,
+        `district`,
+        `sub_district`,
+        `zip_code`,
+        `address`,
+        `credit`,
+        `role`)
+        VALUES
+        (?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?);");
+        $stmt->bind_param("ssssssssds",
+        $name,
+        $surname,
+        $email,
+        $password,
+        $district,
+        $sub_district,
+        $zip_code,
+        $address,
+        $credit,
+        $role);
+
+        // set parameters and execute
+        $stmt->execute();
+
+        echo json_encode(
+            [
+                'is_complete' => true,
+                'message' => 'user insert complete',
+                'data' => [],
+            ]
+        );
+ 
+        $stmt->close();
+        $conn->close();
+    }
     
 
 ?>

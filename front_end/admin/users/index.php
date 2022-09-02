@@ -161,35 +161,31 @@
             <h3 class="card-title">DataTable with minimal features & hover style</h3>
           </div>
           <!-- /.card-header -->
-          <div class="card-body">
-            <table id="data-table" class="table table-bordered table-hover">
-              <thead>
-                <tr>
-                  <th>id</th>
-                  <th>name</th>
-                  <th>surname</th>
-                  <th>phone</th>
-                  <th>credit</th>
-                  <th>created_at</th>
-                  <th>tools</th>
-                </tr>
-              </thead>
-              <tbody>
-                <td>1</td>
-                <td>Peearpar</td>
-                <td>Phusitsawat</td>
-                <td>0875906075</td>
-                <td>2000</td>
-                <td>2022-01-01 12:12:12</td>
-                <td class="d-flex justify-content-around">
-                  <a href="edit"><i class="fa-solid fa-pen-to-square"></i></a>
-                  <a href="#" id="delete"><i class="fa-solid fa-trash-can"></i></a>
-                </td>
-              </tbody>
+          <form>
+            <div class="card-body">
+              <div class='w-100 d-flex justify-content-end mb-2'>
+                <a href="insert" id="new_product" class="btn btn-primary ml-auto">New User</a>
+              </div>
+              <table id="data-table" class="table table-bordered table-hover">
+            </div>
+            <thead>
+              <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>surname</th>
+                <th>email</th>
+                <th>credit</th>
+                <th>role</th>
+                <th>created_at</th>
+                <th>tools</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
             </table>
-          </div>
-          <!-- /.card-body -->
+          </form>
         </div>
+        <!-- /.card-body -->
       </div>
     </div>
   </div>
@@ -227,23 +223,63 @@
 
   <script>
     $(function() {
-      $('#data-table').DataTable({
+      let table = $('#data-table').DataTable({
         "paging": true,
-        "lengthChange": false,
+        "lengthChange": true,
         "searching": true,
         "ordering": true,
         "info": true,
         "autoWidth": false,
         "responsive": true,
+        ajax: {
+          url: '../../../back_end/user_api/get_user.php',
+          dataSrc: 'data'
+        },
+        columnDefs: [{
+          targets: -1,
+          data: null,
+          defaultContent: `
+          <div class="d-flex justify-content-around">
+            <a href="edit"><i class="fa-solid fa-pen-to-square"></i></a>
+            <a href="#" class="delete" delete-id=""><i class="fa-solid fa-trash-can"></i></a>
+          </div>`,
+        }, ],
+        columns: [{
+            data: 'id'
+          },
+          {
+            data: 'name'
+          },
+          {
+            data: 'surname'
+          },
+          {
+            data: 'email'
+          },
+          {
+            data: 'credit'
+          },
+          {
+            data: 'role'
+          },
+          {
+            data: 'created_at'
+          },
+          {
+            data: null
+          }
+        ]
       });
       var Toast = Swal.mixin({
         showConfirmButton: false,
         timer: 2000
       });
-      $('#delete').click(function() {
+      $('#data-table tbody').on('click', '.delete', function(e) {
+        var data = table.row($(this).parents('tr')).data();
+        e.preventDefault();
         Swal.fire({
           title: 'Are you sure?',
-          text: "You won't be able to revert this!",
+          text: `You want to delete id = ${data.id}`,
           icon: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',

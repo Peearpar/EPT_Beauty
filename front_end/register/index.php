@@ -78,7 +78,7 @@
     <script src="../sweetalert2/sweetalert2@11.js"></script>
 
     <script>
-        $(() => {
+        $(() => { 
             $("form").submit(function(e) {
                 e.preventDefault();
                 const name = $('#name').val();
