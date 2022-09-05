@@ -28,5 +28,27 @@
 
     }
     
+    function getByid($id){
+        $conn = connection();
+
+        // prepare and bind
+        $stmt = $conn->prepare("
+        SELECT id, name, surname, email, district, sub_district, zip_code, address, credit, role, created_at
+        FROM `ept_beauty`.users
+        WHERE id = ?");
+
+        $stmt->bind_param("i",
+        $id);
+
+        // set parameters and execute
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_assoc();
+
+        $stmt->close();
+        $conn->close();
+
+        return $result;
+
+    }
 
 ?>

@@ -145,50 +145,62 @@
               <!-- general form elements -->
               <div class="card card-primary">
                 <div class="card-header">
-                  <h3 class="card-title">User id</h3>
+                  <h3 class="card-title" id="user-id">User id</h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form>
+                <form method="post">
                   <div class="card-body">
                     <div class="form-group">
                       <div class="form-group">
                         <label for="name">Name</label>
-                        <input type="text" class="form-control" id="name">
+                        <input type="text" class="form-control" id="name" required>
                       </div>
                       <div class="form-group">
                         <label for="surname">Surname</label>
-                        <input type="text" class="form-control" id="surname">
+                        <input type="text" class="form-control" id="surname" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" readonly="readonly">
                       </div>
                       <div class="form-group">
                         <label for="district">District</label>
-                        <input type="text" class="form-control" id="district">
+                        <input type="text" class="form-control" id="district" required>
                       </div>
                       <div class="form-group">
                         <label for="sub-district">Sub-District</label>
-                        <input type="text" class="form-control" id="sub-district">
+                        <input type="text" class="form-control" id="sub-district" required>
                       </div>
                       <div class="form-group">
                         <label for="zip_code">Zip_Code</label>
-                        <input type="number" class="form-control" id="zip_code">
+                        <input type="number" class="form-control" id="zip_code" required>
                       </div>
                       <div class="form-group">
                         <label for="address">Address</label>
-                        <input type="text" class="form-control" id="address">
+                        <input type="text" class="form-control" id="address" required>
                       </div>
                       <div class="form-group">
                         <label for="credit">Credit</label>
-                        <input type="number" class="form-control" id="credit">
+                        <input type="number" class="form-control" id="credit" required>
+                      </div>
+                      <div class="form-group">
+                        <label>Role</label>
+                        <select class="custom-select" id="role">
+                          <option id="admin">admin</option>
+                          <option id="customer">customer</option>
+                        </select>
                       </div>
                     </div>
                   </div>
-                </form>
-                <!-- /.card-body -->
 
-                <div class="card-footer d-flex justify-content-center">
-                  <a id="edit" type="submit" class="btn btn-primary w-100 mr-2">Edit</a>
-                  <a href="../" class="btn btn-secondary w-100 ml-2">Cancel</a>
-                </div>
+                  <!-- /.card-body -->
+
+                  <div class="card-footer d-flex justify-content-center">
+                    <a id="edit" class="btn btn-primary w-100 mr-2">Edit</a>
+                    <a href="../" class="btn btn-secondary w-100 ml-2">Cancel</a>
+                  </div>
+                </form>
 
               </div>
               <!-- /.card -->
@@ -216,6 +228,8 @@
 
     <script>
       $(function() {
+        loadUser();
+
         var Toast = Swal.mixin({
           showConfirmButton: false,
           timer: 2000
@@ -231,17 +245,122 @@
             confirmButtonText: 'Yes, Edit it!'
           }).then((result) => {
             if (result.isConfirmed) {
-              Toast.fire(
-                'edit!',
-                'Your file has been edited.',
-                'success'
-              ).then(() => {
-                window.location.href = "../"
-              })
+              editUser();
             }
           })
         });
+
       });
+
+      function editUser() {
+        const name = $('#name').val();
+        const surname = $('#surname').val();
+        const address = $('#address').val();
+        const district = $('#district').val();
+        const subdistrict = $('#sub-district').val();
+        const zip_code = $('#zip_code').val();
+        const password = $('#password').val();
+        const credit = $('#credit').val();
+        const role = $('#role').find(":selected").text();
+
+        $.post("../../../../back_end/user_api/edit_user.php", {
+          id: getUserIdParam(),
+          name: name,
+          surname: surname,
+          address: address,
+          district: district,
+          sub_district: subdistrict,
+          zip_code: zip_code,
+          password: password,
+          credit: credit,
+          role: role,
+        }).done(function(data) {
+          console.log(data.is_complete);
+
+          let status = 'success';
+          let message = data.message;
+
+          if (!data.is_complete) {
+            status = 'error';
+
+            if (!$('#email').hasClass('is-invalid')) {
+              $('#email').addClass('is-invalid');
+            }
+          } else {
+            if (!$('#email').hasClass('is-invalid')) {
+              $('#email').removeClass('is-invalid');
+            }
+          }
+          var Toast = Swal.mixin({
+            showConfirmButton: false,
+            timer: 2000,
+            icon: status,
+          });
+
+          Toast.fire(
+            message,
+          ).then(() => {
+            if(data.is_complete) {
+              window.location.href = "../"
+            }
+          })
+        }).fail(function(data) {
+          console.log(data);
+        });
+
+      }
+
+      function getUserIdParam() {
+        const params = new Proxy(new URLSearchParams(window.location.search), {
+          get: (searchParams, prop) => searchParams.get(prop),
+        });
+
+        let value = params.id;
+        return value;
+      }
+
+      function loadUser() {
+        const id = getUserIdParam();
+
+        $.post("../../../../back_end/user_api/get_user_by_id.php", {
+          id: id,
+        }).done(function(data) {
+          console.log(data.is_complete);
+
+          if (!data.is_complete) {
+            let status = 'error';
+            let message = data.message;
+
+            Toast.fire(
+              'Error!',
+              message,
+              status
+            ).then(() => {
+              window.location.href = "../";
+            })
+          }
+
+          $('#user-id').html(`User id = ${data.data.id}`);
+          $('#name').attr('value', data.data.name);
+          $('#surname').attr('value', data.data.surname);
+          $('#email').attr('value', data.data.email);
+          $('#district').attr('value', data.data.district);
+          $('#sub-district').attr('value', data.data.sub_district);
+          $('#zip_code').attr('value', data.data.zip_code);
+          $('#address').attr('value', data.data.address);
+          $('#credit').attr('value', data.data.credit);
+
+          if (data.data.role === 'admin') {
+            $('#admin').attr('selected', true);
+          } else {
+            $('#customer').attr('selected', true);
+          }
+
+        }).fail(function(data) {
+          console.log(data);
+        });
+
+      }
     </script>
 </body>
 

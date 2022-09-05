@@ -73,7 +73,7 @@
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
-              <a href="../" class="nav-link active">
+              <a href="../" class="nav-link">
                 <i class="fa-solid fa-box-archive"></i>
                 <p>
                   Products
@@ -109,7 +109,7 @@
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
-              <a href="../../users" class="nav-link">
+              <a href="../../users" class="nav-link active">
                 <i class="fa-solid fa-users"></i>
                 <p>
                   Users
@@ -231,7 +231,6 @@
   <script>
     $(function() {
       $("form").submit(function(e) {
-        console.log('xxxx');
         e.preventDefault();
         const name = $('#name').val();
         const surname = $('#surname').val();
@@ -281,7 +280,7 @@
           Toast.fire(
             message,
           ).then(() => {
-            // window.location.href = "../"
+            window.location.href = "../"
           })
         }).fail(function(data) {
           console.log(data);

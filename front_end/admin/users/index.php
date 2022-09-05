@@ -145,7 +145,7 @@
         <!-- small box -->
         <div class="small-box bg-danger">
           <div class="inner">
-            <h3>65</h3>
+            <h3 id="user-count">65</h3>
 
             <p>Users</p>
           </div>
@@ -231,17 +231,22 @@
         "info": true,
         "autoWidth": false,
         "responsive": true,
-        ajax: {
-          url: '../../../back_end/user_api/get_user.php',
-          dataSrc: 'data'
+        ajax: async (data, callback) => {
+          const datas = await $.get({
+            url: "../../../back_end/user_api/get_user.php",
+          });
+
+          // set count users
+          $('#user-count').html(datas.data.length);
+          callback(datas);
         },
         columnDefs: [{
           targets: -1,
           data: null,
           defaultContent: `
           <div class="d-flex justify-content-around">
-            <a href="edit"><i class="fa-solid fa-pen-to-square"></i></a>
-            <a href="#" class="delete" delete-id=""><i class="fa-solid fa-trash-can"></i></a>
+            <a href="#"><i class="fa-solid fa-pen-to-square edit"></i></a>
+            <a href="#" class="delete"><i class="fa-solid fa-trash-can"></i></a>
           </div>`,
         }, ],
         columns: [{
@@ -270,6 +275,7 @@
           }
         ]
       });
+
       var Toast = Swal.mixin({
         showConfirmButton: false,
         timer: 2000
@@ -287,13 +293,32 @@
           confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
           if (result.isConfirmed) {
-            Toast.fire(
-              'Deleted!',
-              'Your file has been deleted.',
-              'success'
-            )
+            $.post("../../../back_end/user_api/delete_user.php", {
+              id: data.id,
+            }).done(function(data) {
+              console.log(data.is_complete);
+
+              let status = 'success';
+              let message = data.message;
+
+              Toast.fire(
+                'Deleted!',
+                message,
+                status
+              ).then(() => {
+                location.reload();
+              })
+            }).fail(function(data) {
+              console.log(data);
+            });
+
           }
         })
+      });
+      $('#data-table tbody').on('click', '.edit', function(e) {
+        var data = table.row($(this).parents('tr')).data();
+        e.preventDefault();
+        window.location.href = `edit/?id=${data.id}`;
       });
     });
   </script>
