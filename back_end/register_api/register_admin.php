@@ -1,10 +1,12 @@
 <?php 
     require_once '../sql_functions/user_functions/user.insert.php';
-    
+
+    $salt = 'EPT-BEAUTY';
+
     $name = $_POST['name'];
     $surname  = $_POST['surname'];
     $email  = $_POST['email'];
-    $password  = $_POST['password'];
+    $password  = md5($_POST['password'] . $_POST['email'] . $salt);
     $district = $_POST['district'];
     $sub_district = $_POST['sub_district'];
     $zip_code = $_POST['zip_code'];

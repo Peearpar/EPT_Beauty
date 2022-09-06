@@ -47,8 +47,9 @@
         <li class="nav-item dropdown">
           <a class="nav-link" data-toggle="dropdown" href="#">
             <i class="far fa-user"></i>
+            Admin
           </a>
-          <div class="dropdown-menu dropdown-menu dropdown-menu-right">
+          <div class="dropdown-menu dropdown-menu dropdown-menu-right"id="logout">
             <a href="#" class="dropdown-item">
               <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i>
               Log out
@@ -225,9 +226,12 @@
     <script src="../../../sweetalert2/sweetalert2@11.js"></script>
     <!-- AdminLTE -->
     <script src="../../dist/js/adminlte.js"></script>
+    <!-- MY JS -->
+    <script src="../../../js/script.js"></script>
 
     <script>
       $(function() {
+        validateAdminPermission(getCookie('email'), getCookie('token'));
         loadUser();
 
         var Toast = Swal.mixin({
@@ -274,6 +278,7 @@
           password: password,
           credit: credit,
           role: role,
+          user_email: getCookie('email')
         }).done(function(data) {
           console.log(data.is_complete);
 
@@ -300,7 +305,7 @@
           Toast.fire(
             message,
           ).then(() => {
-            if(data.is_complete) {
+            if (data.is_complete) {
               window.location.href = "../"
             }
           })
@@ -324,6 +329,7 @@
 
         $.post("../../../../back_end/user_api/get_user_by_id.php", {
           id: id,
+          user_email: getCookie('email')
         }).done(function(data) {
           console.log(data.is_complete);
 
@@ -361,6 +367,18 @@
         });
 
       }
+
+      $(function() {
+            $('#logout').click(() => { ////ถ้าเกิดการคลิก Selector ตัว logout ให้ทำการลบคุกกี้ทิ้ง แล้ว reload หน้่าใหม่ (Jquery)
+                deleteCookie('token', '/');
+                deleteCookie('name', '/');
+                deleteCookie('email', '/');
+                deleteCookie('credit', '/');
+
+                location.reload();
+            });
+        });
+
     </script>
 </body>
 

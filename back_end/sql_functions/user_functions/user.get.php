@@ -9,7 +9,7 @@
 
         // prepare and bind
         $stmt = $conn->prepare("
-        SELECT count(*) AS counts, name, credit
+        SELECT count(*) AS counts, name, credit, role
         FROM `ept_beauty`.users
         WHERE email = ?
         AND password = ?");

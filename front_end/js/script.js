@@ -1,3 +1,18 @@
+function validateAdminPermission(user_email, token) {
+    $.post("/EPT_Beauty/back_end/validate_api/validate_permission.php", {
+        user_email: user_email,
+        token: token
+      }).done(function(data) {
+        console.log('permission = ' + data.is_complete);
+        if(!data.is_complete)
+        {
+            window.location.href = "/EPT_Beauty/front_end/"
+        }
+      }).fail(function(data) {
+        console.log(data);
+      });
+}
+
 function setInitPriceAndItem(){
     console.log(sumAmount());
     $('#amount').html(sumAmount());

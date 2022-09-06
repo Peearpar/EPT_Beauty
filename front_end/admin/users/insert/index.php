@@ -47,8 +47,9 @@
         <li class="nav-item dropdown">
           <a class="nav-link" data-toggle="dropdown" href="#">
             <i class="far fa-user"></i>
+            Admin
           </a>
-          <div class="dropdown-menu dropdown-menu dropdown-menu-right">
+          <div class="dropdown-menu dropdown-menu dropdown-menu-right" id="logout">
             <a href="#" class="dropdown-item">
               <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i>
               Log out
@@ -227,9 +228,12 @@
   <script src="../../../sweetalert2/sweetalert2@11.js"></script>
   <!-- AdminLTE -->
   <script src="../../dist/js/adminlte.js"></script>
+  <!-- MY JS -->
+  <script src="../../../js/script.js"></script>
 
   <script>
     $(function() {
+      validateAdminPermission(getCookie('email'), getCookie('token'));
       $("form").submit(function(e) {
         e.preventDefault();
         const name = $('#name').val();
@@ -289,6 +293,18 @@
       });
 
     });
+
+    $(function() {
+            $('#logout').click(() => { ////ถ้าเกิดการคลิก Selector ตัว logout ให้ทำการลบคุกกี้ทิ้ง แล้ว reload หน้่าใหม่ (Jquery)
+                deleteCookie('token', '/');
+                deleteCookie('name', '/');
+                deleteCookie('email', '/');
+                deleteCookie('credit', '/');
+
+                location.reload();
+            });
+        });
+
   </script>
 </body>
 

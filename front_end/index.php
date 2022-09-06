@@ -288,7 +288,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             } else {
                 $('#is_login').remove(); ///// ถ้าไม่มี token ให้ลบ is_login แทน
             }
-            $('#logout').click(() => { ////ถ้าเกิดการคลิก Selecter ตัว logout ให้ทำการลบคุกกี้ทิ้ง แล้ว reload หน้่าใหม่ (Jquery)
+            $('#logout').click(() => { ////ถ้าเกิดการคลิก Selector ตัว logout ให้ทำการลบคุกกี้ทิ้ง แล้ว reload หน้่าใหม่ (Jquery)
                 deleteCookie('token', '/');
                 deleteCookie('name', '/');
                 deleteCookie('email', '/');

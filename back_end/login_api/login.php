@@ -1,9 +1,12 @@
 <?php
     require_once '../sql_functions/user_functions/user.get.php';
+    require_once('../helper_function/user.validate.php');
     session_start();
 
+    $salt = 'EPT-BEAUTY';
+
     $email  = $_POST['email'];
-    $password  = $_POST['password'];
+    $password  = md5($_POST['password'] . $_POST['email'] . $salt);
 
     $result = login($email,$password);
     if($result['counts'] == 0)
@@ -18,16 +21,18 @@
         return;
     }
 
-    $_SESSION[$email."_ticket"] = $email . "_ticket"; ///// set token
+    // $_SESSION["token"][$email] = md5(uniqid(microtime(), true) . $email); ///// set token
+
     echo json_encode(
     [
         'is_complete' => true,
         'message' => 'Login success',
         'data' => [
-            'token' => $_SESSION[$email."_ticket"], ///// ได้รับ token เมื่อ login เสร็จแล้ว
+            'token' => fetchToken($email, $result), ///// ได้รับ token เมื่อ login เสร็จแล้ว
             'email' => $email,
             'name' => $result['name'],
             'credit' => $result['credit'],
+            'role' => $result['role'],
         ]
     ]
     );

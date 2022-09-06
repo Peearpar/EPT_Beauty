@@ -77,43 +77,43 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </a>
                     </li>
                     <!-- Login Dropdowm Menu -->
-                <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-5" id="is_login">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" data-toggle="dropdown" id="d_name" href="#">
-                            <i class="fa fa-user"></i>
-                            Peearpar
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                            <a href="#" class="dropdown-item bg-dark">
-                                <div class="media">
-                                    <div class="media-body">
-                                        <p class="text-sm" id="d_email">phusit_sawat@hotmail.com</p>
-                                    </div>
-                                </div>
+                    <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-5" id="is_login">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" data-toggle="dropdown" id="d_name" href="#">
+                                <i class="fa fa-user"></i>
+                                Peearpar
                             </a>
-                            <a href="#" class="dropdown-item">
-                                <div class="media">
-                                    <div class="media-body">
-                                        <p class="text-sm" id="d_credit">credit: 0</p>
+                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                                <a href="#" class="dropdown-item bg-dark">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <p class="text-sm" id="d_email">phusit_sawat@hotmail.com</p>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
-                            <a href="#" class="dropdown-item" id="logout">
-                                <div class="media">
-                                    <div class="media-body">
-                                        <p class="text-sm">Log out</p>
+                                </a>
+                                <a href="#" class="dropdown-item">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <p class="text-sm" id="d_credit">credit: 0</p>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
+                                <a href="#" class="dropdown-item" id="logout">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <p class="text-sm">Log out</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="cart" href="../cart/index.php">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                                <span class="badge badge-danger navbar-badge">3</span>
                             </a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="cart" href="../cart/index.php">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                            <span class="badge badge-danger navbar-badge">3</span>
-                        </a>
-                    </li>
-                </ul>
+                        </li>
+                    </ul>
                 </ul>
             </div>
         </nav>
@@ -276,6 +276,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     ";expires=Thu, 01 Jan 1970 00:00:01 GMT";
             }
         }
+
 
         function getCookie(name) { /////เป็นfunction ที่หั่น cookie เป็น key และ value แล้วค่อยแบ่ง value ออกมาตาม key อีกที
             const cookieValue = document.cookie

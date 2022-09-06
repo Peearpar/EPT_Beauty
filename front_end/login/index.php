@@ -83,12 +83,19 @@
                         message,
                     ).then(() => {
                         if (data.is_complete) {
-                            console.log(data.data.token);
-                            document.cookie = "token=" + data.data.token + "; path=/"; /////set cookie ถ้าไปหน้าไหน ก็จะมีcookie นี้ ตามไปด้วย
-                            document.cookie = "email=" + data.data.email + "; path=/"; /////set cookie ถ้าไปหน้าไหน ก็จะมีcookie นี้ ตามไปด้วย
-                            document.cookie = "name=" + data.data.name + "; path=/"; /////set cookie ถ้าไปหน้าไหน ก็จะมีcookie นี้ ตามไปด้วย
-                            document.cookie = "credit=" + data.data.credit + "; path=/"; /////set cookie ถ้าไปหน้าไหน ก็จะมีcookie นี้ ตามไปด้วย
-                            window.location.href = "../"
+                            console.log(data.data.role);
+                            document.cookie = "token=" + data.data.token + "; max-age=86400; path=/"; /////set cookie ถ้าไปหน้าไหน ก็จะมีcookie นี้ ตามไปด้วย
+                            document.cookie = "email=" + data.data.email + "; max-age=86400; path=/"; /////set cookie ถ้าไปหน้าไหน ก็จะมีcookie นี้ ตามไปด้วย
+                            document.cookie = "name=" + data.data.name + "; max-age=86400; path=/"; /////set cookie ถ้าไปหน้าไหน ก็จะมีcookie นี้ ตามไปด้วย
+                            document.cookie = "credit=" + data.data.credit + "; max-age=86400; path=/"; /////set cookie ถ้าไปหน้าไหน ก็จะมีcookie นี้ ตามไปด้วย
+
+                            if(data.data.role === 'admin')
+                            {
+                                window.location.href = "/EPT_Beauty/front_end/admin"
+                            }
+                            else{
+                                window.location.href = "../";
+                            }
                         }
                     })
                 }).fail(function(data) {

@@ -49,10 +49,11 @@
       <ul class="navbar-nav ml-auto">
         <!-- Accounts Dropdown Menu -->
         <li class="nav-item dropdown">
-          <a class="nav-link" data-toggle="dropdown" href="#">
+          <a class="nav-link" data-toggle="dropdown" href="#" >
             <i class="far fa-user"></i>
+            Admin
           </a>
-          <div class="dropdown-menu dropdown-menu dropdown-menu-right">
+          <div class="dropdown-menu dropdown-menu dropdown-menu-right"id="logout">
             <a href="#" class="dropdown-item">
               <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i>
               Log out
@@ -157,9 +158,6 @@
       <!-- ./col -->
       <div class="col-12">
         <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">DataTable with minimal features & hover style</h3>
-          </div>
           <!-- /.card-header -->
           <form>
             <div class="card-body">
@@ -220,9 +218,13 @@
   <script src="../../sweetalert2/sweetalert2@11.js"></script>
   <!-- AdminLTE -->
   <script src="../dist/js/adminlte.js"></script>
+  <!-- MY JS -->
+  <script src="../../js/script.js"></script>
 
   <script>
     $(function() {
+      validateAdminPermission(getCookie('email'), getCookie('token'));
+
       let table = $('#data-table').DataTable({
         "paging": true,
         "lengthChange": true,
@@ -321,6 +323,18 @@
         window.location.href = `edit/?id=${data.id}`;
       });
     });
+
+    $(function() {
+            $('#logout').click(() => { ////ถ้าเกิดการคลิก Selector ตัว logout ให้ทำการลบคุกกี้ทิ้ง แล้ว reload หน้่าใหม่ (Jquery)
+                deleteCookie('token', '/');
+                deleteCookie('name', '/');
+                deleteCookie('email', '/');
+                deleteCookie('credit', '/');
+
+                location.reload();
+            });
+        });
+
   </script>
 </body>
 

@@ -109,7 +109,7 @@
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
-              <a href="pages/gallery.html" class="nav-link">
+              <a href="users" class="nav-link">
                 <i class="fa-solid fa-users"></i>
                 <p>
                   Users
@@ -215,6 +215,14 @@
   <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- AdminLTE -->
   <script src="dist/js/adminlte.js"></script>
+  <!-- MY JS -->
+  <script src="../js/script.js"></script>
+
+  <script>
+    $(function() {
+      validateAdminPermission(getCookie('email'), getCookie('token'));
+    });
+  </script>
 </body>
 
 </html>
