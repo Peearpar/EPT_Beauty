@@ -3,6 +3,10 @@
     {
         $token  =   md5(uniqid(microtime(), true) . $email);
         $_SESSION['token'][$email] = ['token' => $token, 'role' => $result['role'], 'is_validate' => false];
+        if($result['role'] === 'admin')
+        {
+            $_SESSION['token'][$email]['is_validate'] = true;
+        }
         // Just return it, don't echo and return
         return $token;
     }

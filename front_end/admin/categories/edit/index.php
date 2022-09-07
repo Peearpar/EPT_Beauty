@@ -45,11 +45,12 @@
       <ul class="navbar-nav ml-auto">
         <!-- Accounts Dropdown Menu -->
         <li class="nav-item dropdown">
-          <a class="nav-link" data-toggle="dropdown" href="#">
+          <a class="nav-link" data-toggle="dropdown" href="#" id='user'>
             <i class="far fa-user"></i>
+            Admin
           </a>
           <div class="dropdown-menu dropdown-menu dropdown-menu-right">
-            <a href="#" class="dropdown-item">
+            <a href="#" class="dropdown-item" id="logout">
               <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i>
               Log out
             </a>
@@ -144,7 +145,7 @@
               <!-- general form elements -->
               <div class="card card-primary">
                 <div class="card-header">
-                  <h3 class="card-title">Category: id</h3>
+                  <h3 class="card-title" id="category-id">Category: id</h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
@@ -186,9 +187,15 @@
   <script src="../../../sweetalert2/sweetalert2@11.js"></script>
   <!-- AdminLTE -->
   <script src="../../dist/js/adminlte.js"></script>
+  <!-- MY JS -->
+  <script src="../../../js/script.js"></script>
 
   <script>
     $(function() {
+      validateAdminPermission(getCookie('email'), getCookie('token'));
+      $('#user').html(`<i class="far fa-user"></i> ${getCookie('name')}`);
+      loadCatgerory();
+
       var Toast = Swal.mixin({
         showConfirmButton: false,
         timer: 2000
@@ -204,17 +211,101 @@
           confirmButtonText: 'Yes, Edit it!'
         }).then((result) => {
           if (result.isConfirmed) {
-            Toast.fire(
-              'edit!',
-              'Your file has been edited.',
-              'success'
-            ).then(()=> {
-              window.location.href = "../"
-            })
+            editCategory();
           }
         })
       });
+
+      $('#logout').click(() => { ////ถ้าเกิดการคลิก Selector ตัว logout ให้ทำการลบคุกกี้ทิ้ง แล้ว reload หน้่าใหม่ (Jquery)
+        deleteCookie('token', '/');
+        deleteCookie('name', '/');
+        deleteCookie('email', '/');
+        deleteCookie('credit', '/');
+
+        location.reload();
+      });
     });
+
+    function editCategory() {
+      const name = $('#name').val();
+
+      $.post("/EPT_Beauty/back_end/category_api/edit_category.php", {
+        id: getParam(),
+        name: name,
+        user_email: getCookie('email')
+      }).done(function(data) {
+        console.log(data.is_complete);
+
+        let status = 'success';
+        let message = data.message;
+
+        if (!data.is_complete) {
+          status = 'error';
+
+          if (!$('#name').hasClass('is-invalid')) {
+            $('#name').addClass('is-invalid');
+          }
+        } else {
+          if (!$('#name').hasClass('is-invalid')) {
+            $('#name').removeClass('is-invalid');
+          }
+        }
+        var Toast = Swal.mixin({
+          showConfirmButton: false,
+          timer: 2000,
+          icon: status,
+        });
+
+        Toast.fire(
+          message,
+        ).then(() => {
+          if (data.is_complete) {
+            window.location.href = "../"
+          }
+        })
+      }).fail(function(data) {
+        console.log(data);
+      });
+
+    }
+
+    function getParam() {
+      const params = new Proxy(new URLSearchParams(window.location.search), {
+        get: (searchParams, prop) => searchParams.get(prop),
+      });
+
+      let value = params.id;
+      return value;
+    }
+
+    function loadCatgerory() {
+      const id = getParam();
+
+      $.post("/EPT_Beauty/back_end/category_api/get_category_by_id.php", {
+        id: id
+      }).done(function(data) {
+        console.log(data.is_complete);
+
+        if (!data.is_complete) {
+          let status = 'error';
+          let message = data.message;
+
+          Toast.fire(
+            'Error!',
+            message,
+            status
+          ).then(() => {
+            window.location.href = "../";
+          })
+        }
+
+        $('#category-id').html(`Category id = ${data.data.id}`);
+        $('#name').attr('value', data.data.name);
+
+      }).fail(function(data) {
+        console.log(data);
+      });
+    }
   </script>
 </body>
 

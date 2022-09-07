@@ -45,12 +45,12 @@
       <ul class="navbar-nav ml-auto">
         <!-- Accounts Dropdown Menu -->
         <li class="nav-item dropdown">
-          <a class="nav-link" data-toggle="dropdown" href="#">
+          <a class="nav-link" data-toggle="dropdown" href="#" id='user'>
             <i class="far fa-user"></i>
             Admin
           </a>
-          <div class="dropdown-menu dropdown-menu dropdown-menu-right"id="logout">
-            <a href="#" class="dropdown-item">
+          <div class="dropdown-menu dropdown-menu dropdown-menu-right">
+            <a href="#" class="dropdown-item"  id="logout">
               <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i>
               Log out
             </a>
@@ -232,6 +232,7 @@
     <script>
       $(function() {
         validateAdminPermission(getCookie('email'), getCookie('token'));
+        $('#user').html(`<i class="far fa-user"></i> ${getCookie('name')}`);
         loadUser();
 
         var Toast = Swal.mixin({
@@ -254,6 +255,15 @@
           })
         });
 
+        $('#logout').click(() => { ////ถ้าเกิดการคลิก Selector ตัว logout ให้ทำการลบคุกกี้ทิ้ง แล้ว reload หน้่าใหม่ (Jquery)
+          deleteCookie('token', '/');
+          deleteCookie('name', '/');
+          deleteCookie('email', '/');
+          deleteCookie('credit', '/');
+
+          location.reload();
+        });
+
       });
 
       function editUser() {
@@ -268,7 +278,7 @@
         const role = $('#role').find(":selected").text();
 
         $.post("../../../../back_end/user_api/edit_user.php", {
-          id: getUserIdParam(),
+          id: getParam(),
           name: name,
           surname: surname,
           address: address,
@@ -315,7 +325,7 @@
 
       }
 
-      function getUserIdParam() {
+      function getParam() {
         const params = new Proxy(new URLSearchParams(window.location.search), {
           get: (searchParams, prop) => searchParams.get(prop),
         });
@@ -325,7 +335,7 @@
       }
 
       function loadUser() {
-        const id = getUserIdParam();
+        const id = getParam();
 
         $.post("../../../../back_end/user_api/get_user_by_id.php", {
           id: id,
@@ -367,18 +377,6 @@
         });
 
       }
-
-      $(function() {
-            $('#logout').click(() => { ////ถ้าเกิดการคลิก Selector ตัว logout ให้ทำการลบคุกกี้ทิ้ง แล้ว reload หน้่าใหม่ (Jquery)
-                deleteCookie('token', '/');
-                deleteCookie('name', '/');
-                deleteCookie('email', '/');
-                deleteCookie('credit', '/');
-
-                location.reload();
-            });
-        });
-
     </script>
 </body>
 

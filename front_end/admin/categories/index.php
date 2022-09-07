@@ -49,11 +49,12 @@
       <ul class="navbar-nav ml-auto">
         <!-- Accounts Dropdown Menu -->
         <li class="nav-item dropdown">
-          <a class="nav-link" data-toggle="dropdown" href="#">
+          <a class="nav-link" data-toggle="dropdown" href="#" id='user'>
             <i class="far fa-user"></i>
+            Admin
           </a>
           <div class="dropdown-menu dropdown-menu dropdown-menu-right">
-            <a href="#" class="dropdown-item">
+            <a href="#" class="dropdown-item" id="logout">
               <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i>
               Log out
             </a>
@@ -149,7 +150,7 @@
               <!-- small box -->
               <div class="small-box bg-success">
                 <div class="inner">
-                  <h3>53</h3>
+                  <h3 id="category-count">53</h3>
 
                   <p>Categories</p>
                 </div>
@@ -161,11 +162,11 @@
             <!-- ./col -->
             <div class="col-12">
               <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">DataTable with minimal features & hover style</h3>
-                </div>
                 <!-- /.card-header -->
                 <div class="card-body">
+                  <div class='w-100 d-flex justify-content-end mb-2'>
+                    <a href="insert" id="new_product" class="btn btn-primary ml-auto">New Category</a>
+                  </div>
                   <table id="data-table" class="table table-bordered table-hover">
                     <thead>
                       <tr>
@@ -222,26 +223,64 @@
   <script src="../../sweetalert2/sweetalert2@11.js"></script>
   <!-- AdminLTE -->
   <script src="../dist/js/adminlte.js"></script>
-
+  <!-- MY JS -->
+  <script src="../../js/script.js"></script>
   <script>
     $(function() {
-      $('#data-table').DataTable({
+      validateAdminPermission(getCookie('email'), getCookie('token'));
+      $('#user').html(`<i class="far fa-user"></i> ${getCookie('name')}`);
+
+      let table = $('#data-table').DataTable({
         "paging": true,
-        "lengthChange": false,
+        "lengthChange": true,
         "searching": true,
         "ordering": true,
         "info": true,
         "autoWidth": false,
         "responsive": true,
+        ajax: async (data, callback) => {
+          const datas = await $.get({
+            url: "/EPT_Beauty/back_end/category_api/get_categories.php",
+          });
+
+          // set count users
+          $('#category-count').html(datas.data.length);
+          callback(datas);
+        },
+        columnDefs: [{
+          targets: -1,
+          data: null,
+          defaultContent: `
+          <div class="d-flex justify-content-around">
+            <a href="#"><i class="fa-solid fa-pen-to-square edit"></i></a>
+            <a href="#" class="delete"><i class="fa-solid fa-trash-can"></i></a>
+          </div>`,
+        }, ],
+        columns: [{
+            data: 'id'
+          },
+          {
+            data: 'name'
+          },
+          {
+            data: 'created_at'
+          },
+          {
+            data: null
+          }
+        ]
       });
+
       var Toast = Swal.mixin({
         showConfirmButton: false,
         timer: 2000
       });
-      $('#delete').click(function() {
+      $('#data-table tbody').on('click', '.delete', function(e) {
+        var data = table.row($(this).parents('tr')).data();
+        e.preventDefault();
         Swal.fire({
           title: 'Are you sure?',
-          text: "You won't be able to revert this!",
+          text: `You want to delete id = ${data.id}`,
           icon: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
@@ -249,13 +288,43 @@
           confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
           if (result.isConfirmed) {
-            Toast.fire(
-              'Deleted!',
-              'Your file has been deleted.',
-              'success'
-            )
+            $.post("/EPT_Beauty/back_end/category_api/delete_category.php", {
+              id: data.id,
+              user_email: getCookie('email')
+            }).done(function(data) {
+              console.log(data.is_complete);
+
+              let status = 'success';
+              let message = data.message;
+
+              Toast.fire(
+                'Deleted!',
+                message,
+                status
+              ).then(() => {
+                location.reload();
+              })
+            }).fail(function(data) {
+              console.log(data);
+            });
+
           }
         })
+      });
+      $('#data-table tbody').on('click', '.edit', function(e) {
+        var data = table.row($(this).parents('tr')).data();
+        e.preventDefault();
+        window.location.href = `edit/?id=${data.id}`;
+      });
+
+      $('#logout').click(() => { ////ถ้าเกิดการคลิก Selector ตัว logout ให้ทำการลบคุกกี้ทิ้ง แล้ว reload หน้่าใหม่ (Jquery)
+        deleteCookie('token', '/');
+        deleteCookie('name', '/');
+        deleteCookie('email', '/');
+        deleteCookie('credit', '/');
+
+        location.reload();
+
       });
     });
   </script>

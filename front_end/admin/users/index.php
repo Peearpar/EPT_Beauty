@@ -49,12 +49,12 @@
       <ul class="navbar-nav ml-auto">
         <!-- Accounts Dropdown Menu -->
         <li class="nav-item dropdown">
-          <a class="nav-link" data-toggle="dropdown" href="#" >
+          <a class="nav-link" data-toggle="dropdown" id="user" href="#">
             <i class="far fa-user"></i>
             Admin
           </a>
-          <div class="dropdown-menu dropdown-menu dropdown-menu-right"id="logout">
-            <a href="#" class="dropdown-item">
+          <div class="dropdown-menu dropdown-menu dropdown-menu-right">
+            <a href="#" class="dropdown-item" id="logout">
               <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i>
               Log out
             </a>
@@ -159,29 +159,28 @@
       <div class="col-12">
         <div class="card">
           <!-- /.card-header -->
-          <form>
-            <div class="card-body">
-              <div class='w-100 d-flex justify-content-end mb-2'>
-                <a href="insert" id="new_product" class="btn btn-primary ml-auto">New User</a>
-              </div>
-              <table id="data-table" class="table table-bordered table-hover">
+          <div class="card-body">
+            <div class='w-100 d-flex justify-content-end mb-2'>
+              <a href="insert" id="new_product" class="btn btn-primary ml-auto">New User</a>
             </div>
-            <thead>
-              <tr>
-                <th>id</th>
-                <th>name</th>
-                <th>surname</th>
-                <th>email</th>
-                <th>credit</th>
-                <th>role</th>
-                <th>created_at</th>
-                <th>tools</th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
+            <table id="data-table" class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th>id</th>
+                  <th>name</th>
+                  <th>surname</th>
+                  <th>email</th>
+                  <th>credit</th>
+                  <th>role</th>
+                  <th>created_at</th>
+                  <th>tools</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
             </table>
-          </form>
+          </div>
+
         </div>
         <!-- /.card-body -->
       </div>
@@ -224,6 +223,7 @@
   <script>
     $(function() {
       validateAdminPermission(getCookie('email'), getCookie('token'));
+      $('#user').html(`<i class="far fa-user"></i> ${getCookie('name')}`);
 
       let table = $('#data-table').DataTable({
         "paging": true,
@@ -322,19 +322,16 @@
         e.preventDefault();
         window.location.href = `edit/?id=${data.id}`;
       });
+
+      $('#logout').click(() => { ////ถ้าเกิดการคลิก Selector ตัว logout ให้ทำการลบคุกกี้ทิ้ง แล้ว reload หน้่าใหม่ (Jquery)
+        deleteCookie('token', '/');
+        deleteCookie('name', '/');
+        deleteCookie('email', '/');
+        deleteCookie('credit', '/');
+
+        location.reload();
+      });
     });
-
-    $(function() {
-            $('#logout').click(() => { ////ถ้าเกิดการคลิก Selector ตัว logout ให้ทำการลบคุกกี้ทิ้ง แล้ว reload หน้่าใหม่ (Jquery)
-                deleteCookie('token', '/');
-                deleteCookie('name', '/');
-                deleteCookie('email', '/');
-                deleteCookie('credit', '/');
-
-                location.reload();
-            });
-        });
-
   </script>
 </body>
 

@@ -45,12 +45,11 @@
       <ul class="navbar-nav ml-auto">
         <!-- Accounts Dropdown Menu -->
         <li class="nav-item dropdown">
-          <a class="nav-link" data-toggle="dropdown" href="#" id="user">
+          <a class="nav-link" data-toggle="dropdown" href="#">
             <i class="far fa-user"></i>
-            Admin
           </a>
           <div class="dropdown-menu dropdown-menu dropdown-menu-right">
-            <a href="#" class="dropdown-item" id="logout">
+            <a href="#" class="dropdown-item">
               <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i>
               Log out
             </a>
@@ -74,7 +73,7 @@
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
-              <a href="../" class="nav-link">
+              <a href="../../product/" class="nav-link">
                 <i class="fa-solid fa-box-archive"></i>
                 <p>
                   Products
@@ -86,7 +85,7 @@
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
-              <a href="../../categories/" class="nav-link">
+              <a href="../" class="nav-link active">
                 <i class="fa-brands fa-buffer"></i>
                 <p>
                   Categories
@@ -110,7 +109,7 @@
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
-              <a href="../../users" class="nav-link active">
+              <a href="../../users" class="nav-link">
                 <i class="fa-solid fa-users"></i>
                 <p>
                   Users
@@ -131,7 +130,7 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">New User</h1>
+              <h1 class="m-0">New Category</h1>
             </div>
           </div>
         </div>
@@ -145,68 +144,25 @@
               <!-- general form elements -->
               <div class="card card-primary">
                 <div class="card-header">
-                  <h3 class="card-title">New User</h3>
+                  <h3 class="card-title">New Category</h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form class="needs-validation" method="post">
+                <form>
                   <div class="card-body">
                     <div class="form-group">
-                      <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" class="form-control" id="name" required>
-                      </div>
-                      <div class="form-group">
-                        <label for="surname">Surname</label>
-                        <input type="text" class="form-control" id="surname" required>
-                      </div>
-                      <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="text" class="form-control" id="email" required>
-                      </div>
-                      <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" required>
-                      </div>
-                      <div class="form-group">
-                        <label for="district">District</label>
-                        <input type="text" class="form-control" id="district" required>
-                      </div>
-                      <div class="form-group">
-                        <label for="sub-district">Sub-District</label>
-                        <input type="text" class="form-control" id="sub-district" required>
-                      </div>
-                      <div class="form-group">
-                        <label for="zip_code">Zip_Code</label>
-                        <input type="number" class="form-control" id="zip_code" required>
-                      </div>
-                      <div class="form-group">
-                        <label for="address">Address</label>
-                        <input type="text" class="form-control" id="address" required>
-                      </div>
-                      <div class="form-group">
-                        <label for="credit">Credit</label>
-                        <input type="number" class="form-control" id="credit" required>
-                      </div>
-                      <div class="form-group">
-                        <label>Role</label>
-                        <select class="custom-select" id="role">
-                          <option>admin</option>
-                          <option>customer</option>
-                        </select>
-                      </div>
+                      <label for="name">Name</label>
+                      <input type="text" class="form-control" id="name" required>
                     </div>
                   </div>
                   <div class="card-footer d-flex justify-content-center">
-                    <button id="save" type="submit" class="btn btn-primary w-100 mr-2">Save</button>
+                    <button type="submit" class="btn btn-primary w-100 mr-2">Save</button>
                     <a href="../" class="btn btn-secondary w-100 ml-2">Cancel</a>
                   </div>
                 </form>
               </div>
-              <!-- /.card-body -->
-
-
             </div>
+            <!-- /.card -->
           </div>
         </div>
       </div>
@@ -234,31 +190,14 @@
   <script>
     $(function() {
       validateAdminPermission(getCookie('email'), getCookie('token'));
-      $('#user').html(`<i class="far fa-user"></i> ${getCookie('name')}`);
+
       $("form").submit(function(e) {
         e.preventDefault();
         const name = $('#name').val();
-        const surname = $('#surname').val();
-        const address = $('#address').val();
-        const district = $('#district').val();
-        const subdistrict = $('#sub-district').val();
-        const zip_code = $('#zip_code').val();
-        const email = $('#email').val();
-        const password = $('#password').val();
-        const credit = $('#credit').val();
-        const role = $('#role').find(":selected").text();
 
-        $.post("../../../../back_end/register_api/register_admin.php", {
+        $.post("/EPT_Beauty/back_end/category_api/insert_category.php", {
           name: name,
-          surname: surname,
-          address: address,
-          district: district,
-          sub_district: subdistrict,
-          zip_code: zip_code,
-          email: email,
-          password: password,
-          credit: credit,
-          role: role,
+          user_email: getCookie('email')
         }).done(function(data) {
           console.log(data.is_complete);
 
@@ -268,12 +207,12 @@
           if (!data.is_complete) {
             status = 'error';
 
-            if (!$('#email').hasClass('is-invalid')) {
-              $('#email').addClass('is-invalid');
+            if (!$('#name').hasClass('is-invalid')) {
+              $('#name').addClass('is-invalid');
             }
           } else {
-            if (!$('#email').hasClass('is-invalid')) {
-              $('#email').removeClass('is-invalid');
+            if (!$('#name').hasClass('is-invalid')) {
+              $('#name').removeClass('is-invalid');
             }
           }
           var Toast = Swal.mixin({
@@ -285,22 +224,15 @@
           Toast.fire(
             message,
           ).then(() => {
-            window.location.href = "../"
+            if (data.is_complete) {
+              window.location.href = "../";
+            }
+
           })
         }).fail(function(data) {
           console.log(data);
         });
       });
-
-      $('#logout').click(() => { ////ถ้าเกิดการคลิก Selector ตัว logout ให้ทำการลบคุกกี้ทิ้ง แล้ว reload หน้่าใหม่ (Jquery)
-          deleteCookie('token', '/');
-          deleteCookie('name', '/');
-          deleteCookie('email', '/');
-          deleteCookie('credit', '/');
-
-          location.reload();
-
-        });
     });
   </script>
 </body>
