@@ -45,11 +45,12 @@
       <ul class="navbar-nav ml-auto">
         <!-- Accounts Dropdown Menu -->
         <li class="nav-item dropdown">
-          <a class="nav-link" data-toggle="dropdown" href="#">
+          <a class="nav-link" data-toggle="dropdown" href="#" id='user'>
             <i class="far fa-user"></i>
+            Admin
           </a>
           <div class="dropdown-menu dropdown-menu dropdown-menu-right">
-            <a href="#" class="dropdown-item">
+            <a href="#" class="dropdown-item" id="logout">
               <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i>
               Log out
             </a>
@@ -176,6 +177,10 @@
                       <input type="text" class="form-control" id="name">
                     </div>
                     <div class="form-group">
+                      <label for="price">Price</label>
+                      <input type="number" class="form-control" id="price">
+                    </div>
+                    <div class="form-group">
                       <label for="discount">Discount</label>
                       <input type="number" class="form-control" id="discount" min="0">
                     </div>
@@ -214,9 +219,14 @@
   <script src="../../../sweetalert2/sweetalert2@11.js"></script>
   <!-- AdminLTE -->
   <script src="../../dist/js/adminlte.js"></script>
+  <!-- MY JS -->
+  <script src="../../../js/script.js"></script>
 
   <script>
     $(function() {
+      validateAdminPermission(getCookie('email'), getCookie('token'));
+      $('#user').html(`<i class="far fa-user"></i> ${getCookie('name')}`);
+
       var Toast = Swal.mixin({
         showConfirmButton: false,
         timer: 2000
@@ -236,11 +246,20 @@
               'edit!',
               'Your file has been edited.',
               'success'
-            ).then(()=> {
+            ).then(() => {
               window.location.href = "../"
             })
           }
         })
+      });
+      $('#logout').click(() => { ////ถ้าเกิดการคลิก Selector ตัว logout ให้ทำการลบคุกกี้ทิ้ง แล้ว reload หน้่าใหม่ (Jquery)
+        deleteCookie('token', '/');
+        deleteCookie('name', '/');
+        deleteCookie('email', '/');
+        deleteCookie('credit', '/');
+
+        location.reload();
+
       });
     });
   </script>
