@@ -145,18 +145,19 @@
               <!-- general form elements -->
               <div class="card card-primary">
                 <div class="card-header">
-                  <h3 class="card-title">Product: id</h3>
+                  <h3 class="card-title" id='product-id'>Product: id</h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
                 <form>
                   <div class="card-body">
+                    <img id="preview-img" class="w-10" src="/EPT_Beauty/front_end/images/defualt_image.png" alt="upload">
                     <div class="form-group">
                       <label for="img">File input</label>
                       <div class="input-group">
                         <div class="custom-file">
-                          <input type="file" class="custom-file-input" id="img">
                           <label class="custom-file-label" for="img">Choose file</label>
+                          <input type="file" class="custom-file-input" id="img">
                         </div>
                         <div class="input-group-append">
                           <span class="input-group-text">Upload</span>
@@ -167,102 +168,235 @@
                     <div class="form-group">
                       <label>Category</label>
                       <select class="custom-select" id="category">
-                        <option>Value 1</option>
+                        <!-- <option>Value 1</option>
                         <option>Value 2</option>
-                        <option>Value 3</option>
+                        <option>Value 3</option> -->
                       </select>
                     </div>
                     <div class="form-group">
                       <label for="name">Name</label>
-                      <input type="text" class="form-control" id="name">
+                      <input type="text" class="form-control" id="name" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="description">Description</label>
+                      <input type="text" class="form-control" id="description" required>
                     </div>
                     <div class="form-group">
                       <label for="price">Price</label>
-                      <input type="number" class="form-control" id="price">
+                      <input type="number" class="form-control" id="price" required>
                     </div>
                     <div class="form-group">
                       <label for="discount">Discount</label>
-                      <input type="number" class="form-control" id="discount" min="0">
+                      <input type="number" class="form-control" id="discount" min="0" required>
                     </div>
                     <div class="form-group">
                       <label for="stock">Stock</label>
-                      <input type="number" class="form-control" id="stock" min="0">
+                      <input type="number" class="form-control" id="stock" min="0" required>
                     </div>
                   </div>
-              </div>
-              <!-- /.card-body -->
 
-              <div class="card-footer d-flex justify-content-center">
-                <a id="edit" type="submit" class="btn btn-primary w-100 mr-2">Edit</a>
-                <a href="../" class="btn btn-secondary w-100 ml-2">Cancel</a>
+                  <!-- /.card-body -->
+
+                  <div class="card-footer d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary w-100 mr-2">Edit</button>
+                    <a href="../" class="btn btn-secondary w-100 ml-2">Cancel</a>
+                  </div>
+                </form>
               </div>
-              </form>
             </div>
           </div>
         </div>
       </div>
+
+      <!-- Control Sidebar -->
+      <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+      </aside>
+
+
     </div>
 
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-      <!-- Control sidebar content goes here -->
-    </aside>
+    <!-- jQuery -->
+    <script src="../../plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="../../../sweetalert2/sweetalert2@11.js"></script>
+    <!-- AdminLTE -->
+    <script src="../../dist/js/adminlte.js"></script>
+    <!-- MY JS -->
+    <script src="../../../js/script.js"></script>
+
+    <script>
+      $(function() {
+        validateAdminPermission(getCookie('email'), getCookie('token'));
+        loadProduct();
+        $('#user').html(`<i class="far fa-user"></i> ${getCookie('name')}`);
+
+        $("form").submit(function(e) {
+          e.preventDefault();
+          const category_id = $('#category').find(":selected").val();
+          const name = $('#name').val();
+          const price = $('#price').val();
+          const discount = $('#discount').val();
+          const description = $('#description').val();
+          const stock = $('#stock').val();
+
+          let formData = new FormData();
+          let files = $('#img')[0].files[0];
+          if (files) {
+            formData.append('path_img', files);
+          }
+          formData.append('category_id', category_id);
+          formData.append('name', name);
+          formData.append('description', description);
+          formData.append('price', price);
+          formData.append('discount', discount);
+          formData.append('stock', stock);
+          formData.append('user_email', getCookie('email'));
+          formData.append('id', getParam());
+
+          $.ajax({
+            url: '/EPT_Beauty/back_end/products_api/edit_product.php',
+            type: 'post',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+              console.log(data.is_complete);
+
+              let status = 'success';
+              let message = data.message;
+
+              if (!data.is_complete) {
+                status = 'error';
+
+                if (!$('#name').hasClass('is-invalid')) {
+                  $('#name').addClass('is-invalid');
+                }
+              } else {
+                if (!$('#name').hasClass('is-invalid')) {
+                  $('#name').removeClass('is-invalid');
+                }
+              }
+              var Toast = Swal.mixin({
+                showConfirmButton: false,
+                timer: 2000,
+                icon: status,
+              });
+
+              Toast.fire(
+                message,
+              ).then(() => {
+                if (data.is_complete) {
+                  window.location.href = "../";
+                }
+
+              })
+            },
+            error: function(data) {
+              console.log(data);
+            }
+          })
+
+        });
+        $('#logout').click(() => { ////ถ้าเกิดการคลิก Selector ตัว logout ให้ทำการลบคุกกี้ทิ้ง แล้ว reload หน้่าใหม่ (Jquery)
+          deleteCookie('token', '/');
+          deleteCookie('name', '/');
+          deleteCookie('email', '/');
+          deleteCookie('credit', '/');
+
+          location.reload();
+
+        });
 
 
-  </div>
-
-  <!-- jQuery -->
-  <script src="../../plugins/jquery/jquery.min.js"></script>
-  <!-- Bootstrap -->
-  <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <!-- SweetAlert2 -->
-  <script src="../../../sweetalert2/sweetalert2@11.js"></script>
-  <!-- AdminLTE -->
-  <script src="../../dist/js/adminlte.js"></script>
-  <!-- MY JS -->
-  <script src="../../../js/script.js"></script>
-
-  <script>
-    $(function() {
-      validateAdminPermission(getCookie('email'), getCookie('token'));
-      $('#user').html(`<i class="far fa-user"></i> ${getCookie('name')}`);
-
-      var Toast = Swal.mixin({
-        showConfirmButton: false,
-        timer: 2000
+        ////show img and file name img
+        $('input[type="file"]').change(function(e) {
+          let fileName = e.target.files[0].name;
+          $(this).prev('label').text(fileName);
+          let [file] = $(this).prop('files');
+          if (file) {
+            $('#preview-img').attr('src', URL.createObjectURL(file));
+          }
+        });
       });
-      $('#edit').click(function() {
-        Swal.fire({
-          title: 'Are you sure?',
-          text: "You won't be able to revert this!",
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, Edit it!'
-        }).then((result) => {
-          if (result.isConfirmed) {
+
+      async function loadProduct() {
+        await loadCatgerory();
+        const id = getParam();
+
+        await $.post("/EPT_Beauty/back_end/products_api/get_product_by_id.php", {
+          id: id
+        }).done(function(data) {
+          console.log(data.is_complete);
+
+          if (!data.is_complete) {
+            let status = 'error';
+            let message = data.message;
+
             Toast.fire(
-              'edit!',
-              'Your file has been edited.',
-              'success'
+              'Error!',
+              message,
+              status
             ).then(() => {
-              window.location.href = "../"
+              window.location.href = "../";
             })
           }
-        })
-      });
-      $('#logout').click(() => { ////ถ้าเกิดการคลิก Selector ตัว logout ให้ทำการลบคุกกี้ทิ้ง แล้ว reload หน้่าใหม่ (Jquery)
-        deleteCookie('token', '/');
-        deleteCookie('name', '/');
-        deleteCookie('email', '/');
-        deleteCookie('credit', '/');
 
-        location.reload();
+          $('#product-id').html(`Product id = ${data.data.id}`);
+          $('#name').attr('value', data.data.name);
+          $("#cat_" + data.data.category_id).attr('selected', true);
+          $('#preview-img').attr('src', data.data.path_img);
+          $('#price').attr('value', data.data.price);
+          $('#description').attr('value', data.data.description);
+          $('#discount').attr('value', data.data.discount);
+          $('#stock').attr('value', data.data.stock);
 
-      });
-    });
-  </script>
+        }).fail(function(data) {
+          console.log(data);
+        });
+
+      }
+
+      function loadCatgerory() {
+
+        $.get("/EPT_Beauty/back_end/category_api/get_categories.php")
+          .done(function(data) {
+            console.log(data.is_complete);
+
+            if (!data.is_complete) {
+              let status = 'error';
+              let message = data.message;
+
+              Toast.fire(
+                'Error!',
+                message,
+                status
+              ).then(() => {
+                window.location.href = "../";
+              })
+            }
+
+            data.data.map((value) => {
+              $('#category').append(`<option id='cat_${value.id}' value='${value.id}'>${value.name}</option>`);
+            });
+
+          }).fail(function(data) {
+            console.log(data);
+          });
+
+      }
+
+      function getParam() {
+        const params = new Proxy(new URLSearchParams(window.location.search), {
+          get: (searchParams, prop) => searchParams.get(prop),
+        });
+
+        let value = params.id;
+        return value;
+      }
+    </script>
 </body>
 
 </html>

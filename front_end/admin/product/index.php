@@ -150,7 +150,7 @@
               <!-- small box -->
               <div class="small-box bg-info">
                 <div class="inner">
-                  <h3>150</h3>
+                  <h3 id='product-count'>150</h3>
 
                   <p>Products</p>
                 </div>
@@ -169,7 +169,7 @@
                 <!-- /.card-header -->
                 <div class="card-body">
                   <div class='w-100 d-flex justify-content-end mb-2'>
-                    <a href="new_product"  id="new_product" class="btn btn-primary ml-auto">New Product</a>
+                    <a href="new_product" id="new_product" class="btn btn-primary ml-auto">New Product</a>
                   </div>
                   <table id="data-table" class="table table-bordered table-hover">
                 </div>
@@ -182,6 +182,7 @@
                     <th>price</th>
                     <th>discount</th>
                     <th>stock</th>
+                    <th>is_active</th>
                     <th>created_at</th>
                     <th>tools</th>
                   </tr>
@@ -245,37 +246,143 @@
       validateAdminPermission(getCookie('email'), getCookie('token'));
       $('#user').html(`<i class="far fa-user"></i> ${getCookie('name')}`);
 
-      $('#data-table').DataTable({
+      let table = $('#data-table').DataTable({
         "paging": true,
-        "lengthChange": false,
+        "lengthChange": true,
         "searching": true,
         "ordering": true,
         "info": true,
         "autoWidth": false,
         "responsive": true,
+        ajax: async (data, callback) => {
+          const datas = await $.get({
+            url: "/EPT_Beauty/back_end/products_api/get_products.php",
+          });
+
+          // set count users
+          $('#product-count').html(datas.data.length);
+          callback(datas);
+        },
+        columnDefs: [{
+            targets: 1,
+            data: 'path_img',
+            render: function(data, type, row, meta) {
+              return `
+              <div class="d-flex justify-content-around">
+                <img src="${data}" alt="${data}"  width="50px"/>
+              </div>`;
+            }
+          },
+          {
+            targets: -1,
+            data: null,
+            defaultContent: `
+              <div class="d-flex justify-content-around">
+                <a href="#"><i class="fa-solid fa-pen-to-square edit"></i></a>
+              </div>`,
+          },
+          {
+            targets: -3,
+            data: 'is_active',
+            render: function(data, type, row, meta) {
+              let text = 'Active';
+              let color = 'btn-outline-success';
+              if (!data) {
+                text = 'Disable'
+                color = 'btn-outline-danger'
+              }
+              return `
+              <div class="d-flex justify-content-center">
+                <button type="button" class="btn btn-block ${color} w-75 btn-active">${text}</button>
+              </div>`;
+            },
+          }
+        ],
+        columns: [{
+            data: 'id'
+          },
+          {
+            data: 'path_img'
+          },
+          {
+            data: 'category_name'
+          },
+          {
+            data: 'name'
+          },
+          {
+            data: 'price'
+          },
+          {
+            data: 'discount'
+          },
+          {
+            data: 'stock'
+          },
+          {
+            data: 'is_active'
+          },
+          {
+            data: 'created_at'
+          },
+          {
+            data: null
+          }
+        ]
       });
-      var Toast = Swal.mixin({
-        showConfirmButton: false,
-        timer: 2000
-      });
-      $('#delete').click(function() {
+
+      $('#data-table tbody').on('click', '.btn-active', function(e) {
+        var data = table.row($(this).parents('tr')).data();
+        e.preventDefault();
         Swal.fire({
           title: 'Are you sure?',
-          text: "You won't be able to revert this!",
+          text: `You want to set active or disable id = ${data.id}`,
           icon: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
           cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, delete it!'
+          confirmButtonText: 'Yes, set it!'
         }).then((result) => {
           if (result.isConfirmed) {
-            Toast.fire(
-              'Deleted!',
-              'Your file has been deleted.',
-              'success'
-            )
+            let is_activate = 1;
+            if (data.is_active) {
+              is_activate = 0;
+            }
+            $.post("/EPT_Beauty/back_end/products_api/edit_product_is_active.php", {
+              id: data.id,
+              is_active: is_activate,
+              user_email: getCookie('email')
+            }).done(function(data) {
+              console.log(data.is_complete);
+
+              let status = 'success';
+              let message = data.message;
+
+
+              var Toast = Swal.mixin({
+                showConfirmButton: false,
+                timer: 2000
+              });
+
+              Toast.fire(
+                'Success!',
+                message,
+                status
+              ).then(() => {
+                location.reload();
+              })
+            }).fail(function(data) {
+              console.log(data);
+            });
+
           }
         })
+      });
+
+      $('#data-table tbody').on('click', '.edit', function(e) {
+        var data = table.row($(this).parents('tr')).data();
+        e.preventDefault();
+        window.location.href = `edit/?id=${data.id}`;
       });
 
       $('#logout').click(() => { ////ถ้าเกิดการคลิก Selector ตัว logout ให้ทำการลบคุกกี้ทิ้ง แล้ว reload หน้่าใหม่ (Jquery)

@@ -10,6 +10,12 @@ function validateAdminPermission(user_email, token) {
         }
       }).fail(function(data) {
         console.log(data);
+
+        deleteCookie('token', '/');
+        deleteCookie('name', '/');
+        deleteCookie('email', '/');
+        deleteCookie('credit', '/');
+        window.location.href = "/EPT_Beauty/front_end/login";
       });
 }
 

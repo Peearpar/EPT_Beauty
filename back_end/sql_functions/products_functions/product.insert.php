@@ -17,8 +17,8 @@
 
         // prepare and bind
         $stmt = $conn->prepare("INSERT INTO `ept_beauty`.`products`
-        (`category_id`
-        , `name`, 
+        (`category_id`, 
+        `name`, 
         `path_img`, 
         `price`, 
         `description`, 

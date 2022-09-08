@@ -1,3 +1,7 @@
 .small-box .icon>i {
     font-size: 70px;
 }
+
+#preview-img {
+    width: 200px;
+}

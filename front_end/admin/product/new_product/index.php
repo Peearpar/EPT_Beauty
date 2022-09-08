@@ -151,12 +151,13 @@
                 <!-- form start -->
                 <form>
                   <div class="card-body">
+                    <img id="preview-img" class="w-10" src="/EPT_Beauty/front_end/images/defualt_image.png" alt="upload">
                     <div class="form-group">
                       <label for="img">File input</label>
                       <div class="input-group">
                         <div class="custom-file">
-                          <input type="file" class="custom-file-input" id="img">
                           <label class="custom-file-label" for="img">Choose file</label>
+                          <input type="file" class="custom-file-input" id="img" required>
                         </div>
                         <div class="input-group-append">
                           <span class="input-group-text">Upload</span>
@@ -167,36 +168,41 @@
                     <div class="form-group">
                       <label>Category</label>
                       <select class="custom-select" id="category">
-                        <option>Value 1</option>
+                        <!-- <option>Value 1</option>
                         <option>Value 2</option>
-                        <option>Value 3</option>
+                        <option>Value 3</option> -->
                       </select>
                     </div>
                     <div class="form-group">
                       <label for="name">Name</label>
-                      <input type="text" class="form-control" id="name">
+                      <input type="text" class="form-control" id="name" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="description">Description</label>
+                      <input type="text" class="form-control" id="description" required>
                     </div>
                     <div class="form-group">
                       <label for="price">Price</label>
-                      <input type="number" class="form-control" id="price">
+                      <input type="number" class="form-control" id="price" required>
                     </div>
                     <div class="form-group">
                       <label for="discount">Discount</label>
-                      <input type="number" class="form-control" id="discount" min="0">
+                      <input type="number" class="form-control" id="discount" min="0" required>
                     </div>
                     <div class="form-group">
                       <label for="stock">Stock</label>
-                      <input type="number" class="form-control" id="stock" min="0">
+                      <input type="number" class="form-control" id="stock" min="0" required>
                     </div>
                   </div>
-              </div>
-              <!-- /.card-body -->
 
-              <div class="card-footer d-flex justify-content-center">
-                <a id="edit" type="submit" class="btn btn-primary w-100 mr-2">Save</a>
-                <a href="../" class="btn btn-secondary w-100 ml-2">Cancel</a>
+                  <!-- /.card-body -->
+
+                  <div class="card-footer d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary w-100 mr-2">Save</button>
+                    <a href="../" class="btn btn-secondary w-100 ml-2">Cancel</a>
+                  </div>
+                </form>
               </div>
-              </form>
             </div>
           </div>
         </div>
@@ -225,33 +231,74 @@
   <script>
     $(function() {
       validateAdminPermission(getCookie('email'), getCookie('token'));
+      loadCatgerory();
       $('#user').html(`<i class="far fa-user"></i> ${getCookie('name')}`);
 
-      var Toast = Swal.mixin({
-        showConfirmButton: false,
-        timer: 2000
-      });
-      $('#edit').click(function() {
-        Swal.fire({
-          title: 'Are you sure?',
-          text: "You won't be able to revert this!",
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, Save it!'
-        }).then((result) => {
-          if (result.isConfirmed) {
+      $("form").submit(function(e) {
+        e.preventDefault();
+        const category_id = $('#category').find(":selected").val();
+        const name = $('#name').val();
+        const price = $('#price').val();
+        const discount = $('#discount').val();
+        const stock = $('#stock').val();
+        const description = $('#description').val();
+
+        let formData = new FormData();
+        let files = $('#img')[0].files[0];
+        formData.append('path_img', files);
+        formData.append('category_id', category_id);
+        formData.append('name', name);
+        formData.append('description', description);
+        formData.append('price', price);
+        formData.append('discount', discount);
+        formData.append('stock', stock);
+        formData.append('user_email', getCookie('email'));
+
+        $.ajax({
+          url: '/EPT_Beauty/back_end/products_api/insert_product.php',
+          type: 'post',
+          data: formData,
+          contentType: false,
+          processData: false,
+          success: function(data) {
+            console.log(data.is_complete);
+
+            let status = 'success';
+            let message = data.message;
+
+            if (!data.is_complete) {
+              status = 'error';
+
+              if (!$('#name').hasClass('is-invalid')) {
+                $('#name').addClass('is-invalid');
+              }
+            } else {
+              if (!$('#name').hasClass('is-invalid')) {
+                $('#name').removeClass('is-invalid');
+              }
+            }
+            var Toast = Swal.mixin({
+              showConfirmButton: false,
+              timer: 2000,
+              icon: status,
+            });
+
             Toast.fire(
-              'Save!',
-              'Your file has been edited.',
-              'success'
-            ).then(()=> {
-              window.location.href = "../"
+              message,
+            ).then(() => {
+              if (data.is_complete) {
+                window.location.href = "../";
+              }
+
             })
+          },
+          error: function(data) {
+            console.log(data);
           }
         })
+
       });
+
       $('#logout').click(() => { ////ถ้าเกิดการคลิก Selector ตัว logout ให้ทำการลบคุกกี้ทิ้ง แล้ว reload หน้่าใหม่ (Jquery)
         deleteCookie('token', '/');
         deleteCookie('name', '/');
@@ -261,7 +308,47 @@
         location.reload();
 
       });
+
+      ////show img and file name img
+      $('input[type="file"]').change(function(e) {
+        let fileName = e.target.files[0].name;
+        $(this).prev('label').text(fileName);
+        let [file] = $(this).prop('files');
+        if (file) {
+          $('#preview-img').attr('src', URL.createObjectURL(file));
+        }
+      });
+
     });
+
+    function loadCatgerory() {
+
+      $.get("/EPT_Beauty/back_end/category_api/get_categories.php")
+        .done(function(data) {
+          console.log(data.is_complete);
+
+          if (!data.is_complete) {
+            let status = 'error';
+            let message = data.message;
+
+            Toast.fire(
+              'Error!',
+              message,
+              status
+            ).then(() => {
+              window.location.href = "../";
+            })
+          }
+
+          data.data.map((value) => {
+            $('#category').append(`<option value='${value.id}'>${value.name}</option>`);
+          });
+
+        }).fail(function(data) {
+          console.log(data);
+        });
+
+    }
   </script>
 </body>
 
