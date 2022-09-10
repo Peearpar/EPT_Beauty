@@ -183,15 +183,15 @@
                     </div>
                     <div class="form-group">
                       <label for="price">Price</label>
-                      <input type="number" class="form-control" id="price" required>
+                      <input type="number" class="form-control" id="price" value="0" required>
                     </div>
                     <div class="form-group">
                       <label for="discount">Discount</label>
-                      <input type="number" class="form-control" id="discount" min="0" required>
+                      <input type="number" class="form-control" id="discount" value="0" min="0" required>
                     </div>
                     <div class="form-group">
                       <label for="stock">Stock</label>
-                      <input type="number" class="form-control" id="stock" min="0" required>
+                      <input type="number" class="form-control" id="stock" value="0" min="0" required>
                     </div>
                   </div>
 

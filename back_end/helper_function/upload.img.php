@@ -22,6 +22,7 @@
         if($imageFileType != "jpg" &&
         $imageFileType != "png" &&
         $imageFileType != "jpeg" &&
+        $imageFileType != "webp" &&
         $imageFileType != "gif" ) {
     
             echo json_encode(

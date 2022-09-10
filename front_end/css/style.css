@@ -11,3 +11,17 @@
     aspect-ratio: 16/9;
 }
 
+.text-danger{
+    font-size: 13px;
+}
+
+.save_discount{
+    margin-left: 4px;
+    margin-right: 4px;
+    font-size: 11px;
+}
+
+#card-items {
+    gap: 5%
+}
+
