@@ -21,7 +21,20 @@
     font-size: 11px;
 }
 
-#card-items {
+#card-items{
     gap: 5%
+}
+.card-text-name{
+    font-size:15px;
+    font-weight: bold;
+
+}
+
+.card-description{
+    font-size:13px;
+}
+
+.card-text-price{
+    font-weight: bold;
 }
 

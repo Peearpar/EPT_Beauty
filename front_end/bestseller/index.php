@@ -77,43 +77,43 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </a>
                     </li>
                     <!-- Login Dropdowm Menu -->
-                <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-5" id="is_login">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" data-toggle="dropdown" id="d_name" href="#">
-                            <i class="fa fa-user"></i>
-                            Peearpar
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                            <a href="#" class="dropdown-item bg-dark">
-                                <div class="media">
-                                    <div class="media-body">
-                                        <p class="text-sm" id="d_email">phusit_sawat@hotmail.com</p>
-                                    </div>
-                                </div>
+                    <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-5" id="is_login">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" data-toggle="dropdown" id="d_name" href="#">
+                                <i class="fa fa-user"></i>
+                                Peearpar
                             </a>
-                            <a href="#" class="dropdown-item">
-                                <div class="media">
-                                    <div class="media-body">
-                                        <p class="text-sm" id="d_credit">credit: 0</p>
+                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                                <a href="#" class="dropdown-item bg-dark">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <p class="text-sm" id="d_email">phusit_sawat@hotmail.com</p>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
-                            <a href="#" class="dropdown-item" id="logout">
-                                <div class="media">
-                                    <div class="media-body">
-                                        <p class="text-sm">Log out</p>
+                                </a>
+                                <a href="#" class="dropdown-item">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <p class="text-sm" id="d_credit">credit: 0</p>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
+                                <a href="#" class="dropdown-item" id="logout">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <p class="text-sm">Log out</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="cart" href="../cart/index.php">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                                <span class="badge badge-danger navbar-badge">3</span>
                             </a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="cart" href="../cart/index.php">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                            <span class="badge badge-danger navbar-badge">3</span>
-                        </a>
-                    </li>
-                </ul>
+                        </li>
+                    </ul>
                 </ul>
             </div>
         </nav>
@@ -133,8 +133,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <div class="container">
-                <div class="row mb-2 justify-content-around">
-                    <div class="card mt-4" style="width: 14rem;">
+                <div class="row mb-2 justify-content-center" id="card-items">
+                    <!-- <div class="card mt-4" style="width: 14rem;">
                         <div class="ribbon-wrapper ribbon-lg">
                             <div class="ribbon bg-warning">
                                 Best Seller
@@ -197,7 +197,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <div class="card-footer">
                             <button class="btn btn-block btn-outline-dark">Buy</button>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -228,9 +228,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="../admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../admin/dist/js/adminlte.min.js"></script>
+    <!-- MyJs -->
+    <script src="../js/script.js"></script>
 
     <script>
         $(function() {
+            loadProduct();
             window.onscroll = function() { ////// ให้ nav bar เลื่อนตามลงมา
                 myFunction()
             };
@@ -285,10 +288,55 @@ scratch. This page gets rid of all links and provides the needed markup only.
             return cookieValue
         }
 
-        ////// ใส่ comma ให้ตัวเลข
-        function numberFormat(num) {
-            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        //////load ข้อมูล ptoduct ทั้งหมดมาก่อน
+        function loadProduct() {
+            $.get("/EPT_Beauty/back_end/products_api/get_products.php")
+                .done(function(data) {
+                    console.log(data.is_complete);
+
+                    if (!data.is_complete) {
+                        let status = 'error';
+                        let message = data.message;
+
+                        Toast.fire(
+                            'Error!',
+                            message,
+                            status
+                        ).then(() => {
+                            window.location.href = "../";
+                        })
+                    }
+
+                    data.data.map((value) => {
+                        if (value.discount > 0 && value.is_active === 1) {
+                            let real_price = (100 - value.discount) * 0.01 * value.price;
+                            let tmp = `
+                            <div class="card mt-4" style="width: 14rem;">
+                                <div class="ribbon-wrapper ribbon-lg">
+                                    <div class="ribbon bg-warning">
+                                        Best Seller
+                                    </div>
+                                </div>
+                                <img src="${value.path_img}" class="card-img-top" alt="">
+                                <div class="card-body">
+                                    <p class="card-text-price"">฿${numberFormat(real_price)}</p>
+                                    <p class="card-text-name">${value.name}</p>
+                                    <p class="card-description">${value.description}</p>
+                                </div>
+                                <div class="card-footer">
+                                    <button class="btn btn-block btn-outline-dark">Buy</button>
+                                </div>
+                            </div>
+                            `;
+                            $('#card-items').append(tmp);
+                        }
+                    });
+
+                }).fail(function(data) {
+                    console.log(data);
+                });
         }
+        
     </script>
 </body>
 

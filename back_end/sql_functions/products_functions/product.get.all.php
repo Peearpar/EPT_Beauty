@@ -11,6 +11,7 @@
         $stmt = $conn->prepare("
         SELECT *, categories.name as cat_name, 
         products.name as prod_name,
+        products.created_at as prod_created_at,
         products.id as prod_id
         FROM ept_beauty.products
         INNER JOIN `categories`
@@ -37,7 +38,7 @@
             $output_data['discount'] = $value['discount'];
             $output_data['stock'] = $value['stock'];
             $output_data['is_active'] = $value['is_active'];
-            $output_data['created_at'] = $value['created_at'];
+            $output_data['created_at'] = $value['prod_created_at'];
 
             array_push($output_datas, $output_data);
         }

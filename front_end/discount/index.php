@@ -283,7 +283,7 @@
 
             return cookieValue
         }
-
+        //////load ข้อมูล ptoduct ทั้งหมดมาก่อน
         function loadProduct() {
             $.get("/EPT_Beauty/back_end/products_api/get_products.php")
                 .done(function(data) {
@@ -314,10 +314,10 @@
                                 </div>
                                 <img class="card-img-top" src="${value.path_img}" alt="">
                                 <div class="card-body">
-                                    <p class="card-text">฿${numberFormat(real_price)}</p>
+                                    <p class="card-text-price">฿${numberFormat(real_price)}</p>
                                     <p class="text-danger"><s>฿${numberFormat(value.price)}</s><sup class="save_discount">save</sup>${value.discount}%</p>
-                                    <p class="card-text">${value.name}</p>
-                                    <p>${value.description}</p>
+                                    <p class="card-text-name">${value.name}</p>
+                                    <p class="card-description">${value.description}</p>
                                 </div>
                                 <div class="card-footer">
                                     <button class="btn btn-block btn-outline-dark">Buy</button>

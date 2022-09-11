@@ -175,8 +175,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </div>
             </div>
             <div class="container">
-                <div class="row mb-2 justify-content-around">
-                    <div class="card mt-4" style="width: 14rem;">
+                <div class="row mb-2 justify-content-center" id="card-items">
+                    <!-- <div class="card mt-4" style="width: 14rem;">
                         <div class="ribbon-wrapper ribbon-lg">
                             <div class="ribbon  bg-secondary">
                                 Best Seller
@@ -239,7 +239,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <div class="card-footer">
                             <button class="btn btn-block btn-outline-dark">Buy</button>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -274,9 +274,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
     <script src="admin/dist/js/adminlte.min.js"></script>
+    <!-- MyJs -->
+    <script src="js/script.js"></script>
 
     <script>
         $(function() {
+            loadProduct();
             window.onscroll = function() { ////// ให้ nav bar เลื่อนตามลงมา
                 myFunction()
             };
@@ -331,9 +334,53 @@ scratch. This page gets rid of all links and provides the needed markup only.
             return cookieValue
         }
 
-        ////// ใส่ comma ให้ตัวเลข
-        function numberFormat(num) {
-            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        //////load ข้อมูล ptoduct ทั้งหมดมาก่อน
+        function loadProduct() {
+            $.get("/EPT_Beauty/back_end/products_api/get_products.php")
+                .done(function(data) {
+                    console.log(data.is_complete);
+
+                    if (!data.is_complete) {
+                        let status = 'error';
+                        let message = data.message;
+
+                        Toast.fire(
+                            'Error!',
+                            message,
+                            status
+                        ).then(() => {
+                            window.location.href = "../";
+                        })
+                    }
+
+                    data.data.map((value) => {
+                        if (value.discount > 0 && value.is_active === 1) {
+                            let real_price = (100 - value.discount) * 0.01 * value.price;
+                            let tmp = `
+                            <div class="card mt-4" style="width: 14rem;">
+                                <div class="ribbon-wrapper ribbon-lg">
+                                    <div class="ribbon  bg-secondary">
+                                        Best Seller
+                                    </div>
+                                </div>
+                                <img src="${value.path_img}" class="card-img-top" alt="">
+                                <div class="card-body">
+                                    <p class="card-text-price">฿${numberFormat(real_price)}</p>
+                                    <p class="card-text-name">${value.name}</p>
+                                    <p class="card-description">${value.description}</p>
+                                </div>
+                                <div class="card-footer">
+                                    <button class="btn btn-block btn-outline-dark">Buy</button>
+                                </div>
+                            </div>
+                            `;
+                            $('#card-items').append(tmp);
+                        }
+                    });
+
+                }).fail(function(data) {
+                    console.log(data);
+                });
         }
     </script>
 
