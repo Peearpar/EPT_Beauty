@@ -113,7 +113,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <li class="nav-item">
                             <a class="nav-link" id="cart" href="cart/index.php">
                                 <i class="fa-solid fa-cart-shopping"></i>
-                                <span class="badge badge-danger navbar-badge">3</span>
+                                <span class="badge badge-danger navbar-badge cart-count">3</span>
                             </a>
                         </li>
                     </ul>
@@ -138,7 +138,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="container">
                 <div class="content d-flex justify-content-center pt-2 pb-5">
                     <div class="cart_list d-flex flex-column align-self-center">
-                        <div class="d-flex cart bg-white mr-5 mt-3 p-3">
+                        <!-- <div class="d-flex cart bg-white mr-5 mt-3 p-3">
                             <div class="cart_img align-self-center d-flex justify-content-center">
                                 <img src="../images/VitaminC.jpeg" alt="productimages" class="mr-3">
                             </div>
@@ -225,7 +225,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </div>
                             <h6 class="mr-5 price align-self-center price-1">฿2,500</h6>
                             <h3 class="price_sum align-self-center">฿2,500</h3>
-                        </div>
+                        </div> -->
                     </div>
 
                     <div class="mt-3 total-content">
@@ -279,7 +279,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <script>
         $(function() {
-            setInitPriceAndItem()
+            loadCart();
             window.onscroll = function() { ////// ให้ nav bar เลื่อนตามลงมา
                 myFunction()
             };
@@ -299,12 +299,79 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                 window.location.href = "../";
             });
+        });
 
+        async function loadCart() {
+            if (getCookie('email')) {
+                await $.post("/EPT_Beauty/back_end/cart_api/get_carts_by_user.php", {
+                    user_email: getCookie('email')
+                }).done(function(data) {
+                    if (!data.is_complete) {
+                        let status = 'error';
+                        let message = data.message;
+
+                        Toast.fire(
+                            'Error!',
+                            message,
+                            status
+                        ).then(() => {
+                            window.location.href = "../";
+                        })
+                    }
+                    $('.cart-count').text(data.data.length);
+
+                    data.data.map((value) => {
+                        let real_price = (100 - value.discount) * 0.01 * value.price;
+                        let tmp = `
+                            <div class="d-flex cart bg-white mr-5 mt-3 p-3">
+                                <div class="cart_img align-self-center d-flex justify-content-center ${value.stock <= 0 ? 'disabledDiv' : ''}">
+                                    <img src="${value.path_img}" alt="productimages" class="mr-3">
+                                </div>
+
+                                <div class="mr-5 align-self-center product-text ${value.stock <= 0 ? 'disabledDiv' : ''}">
+                                    <p>${value.prod_name}</p>
+                                    <p>${value.description}</p>
+                                    ${value.stock <= 0 ? '<p class="text-danger">Sold Out!</p>' : ''}
+                                </div>
+
+                                <div class="mr-5 d-flex flex-column align-self-center btn-tools">
+                                    <button type="button" class="btn btn-success mb-3 d-none">Confirm</button>
+                                    <div class="btn-group w-50 mb-3 ${value.stock <= 0 ? 'disabledDiv' : ''}">
+                                        <button type="button" class="btn btn-dark minus ${value.stock <= 0 ? 'disabledEvent' : ''}">-</button>
+                                        <div class="product-count form-control">${value.qty}</div>
+                                        <button type="button" class="btn btn-dark plus ${value.stock <= 0 ? 'disabledEvent' : ''}">+</button>
+                                    </div>
+                                    <button type="button" class="btn btn-danger">Delete</button>
+                                </div>
+                                <div class="d-flex flex-column align-self-center price-contain ${value.stock <= 0 ? 'disabledDiv' : ''}">
+                                    ${value.discount > 0 ? `
+                                    <h6 class="mr-5 price align-self-center price-1">฿${numberFormat(real_price)}</p>
+                                    <h6 class="text-danger mr-5 price align-self-center"><s>฿${numberFormat(value.price)}</s></p>` : 
+                                    `<h6 class="mr-5 price align-self-center price-1">฿${numberFormat(value.price)}</h6>`}
+
+                                </div>
+                                <h3 class="price_sum align-self-center ${value.stock <= 0 ? 'disabledDiv' : ''}">฿${numberFormat(real_price * value.qty)}</h3>
+                            </div>
+                        `;
+                        $('.cart_list').append(tmp);
+                    });
+
+
+                }).fail(function(data) {
+                    console.log(data);
+                });
+
+                triggerClickEvent();
+                setInitPriceAndItem();
+            }
+        }
+
+        function triggerClickEvent() {
             $(".minus").click(function(index) {
                 let temp = parseInt($(this).parent().children('div').text()) - 1;
                 if (temp > 0) {
                     $(this).parent().children('div').html(temp);
-                    let price = $(this).parent().parent().parent().children('.price').text();
+                    let price = $(this).parent().parent().parent().children('.price-contain').children('.price-1').text();
                     price = toNumber(price);
                     let priceSum = $(this).parent().parent().parent().children('.price_sum');
                     priceSum.html('฿' + numberFormat(price * temp));
@@ -321,7 +388,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             $(".plus").click(function(index) {
                 let temp = parseInt($(this).parent().children('div').text()) + 1;
                 $(this).parent().children('div').html(temp);
-                let price = $(this).parent().parent().parent().children('.price').text();
+                let price = $(this).parent().parent().parent().children('.price-contain').children('.price-1').text();
                 price = toNumber(price);
                 let priceSum = $(this).parent().parent().parent().children('.price_sum');
                 priceSum.html('฿' + numberFormat(price * temp));
@@ -340,8 +407,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     btnConfirm.removeClass('d-block');
                     btnConfirm.addClass('d-none');
                 }
-            })
-        });
+            });
+        }
     </script>
 
 

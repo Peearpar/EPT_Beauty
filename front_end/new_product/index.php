@@ -110,7 +110,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <li class="nav-item">
                             <a class="nav-link" id="cart" href="../cart/index.php">
                                 <i class="fa-solid fa-cart-shopping"></i>
-                                <span class="badge badge-danger navbar-badge">3</span>
+                                <span class="badge badge-danger navbar-badge cart-count">3</span>
                             </a>
                         </li>
                     </ul>
@@ -234,6 +234,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script>
         $(function() {
             loadProduct();
+            loadCart();
             window.onscroll = function() { ////// ให้ nav bar เลื่อนตามลงมา
                 myFunction()
             };
@@ -262,7 +263,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             var fixed = contentHeader.offsetTop + contentHeader.offsetHeight;
 
             if (window.pageYOffset >= fixed) {
-                console.log(fixed);
+                // console.log(fixed);
                 nav.classList.add("fixed-top")
             } else {
                 nav.classList.remove("fixed-top");
@@ -290,8 +291,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         }
 
         //////load ข้อมูล ptoduct ทั้งหมดมาก่อน
-        function loadProduct() {
-            $.get("/EPT_Beauty/back_end/products_api/get_products.php")
+        async function loadProduct() {
+            await $.get("/EPT_Beauty/back_end/products_api/get_products.php")
                 .done(function(data) {
                     console.log(data.is_complete);
 
@@ -309,8 +310,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     }
 
                     data.data.map((value) => {
-                        const is_new = new Date(value.created_at).getMonth() === new Date().getMonth() ;
-                        if (value.is_active === 1 && is_new) {
+                        const is_new = new Date(value.created_at).getMonth() === new Date().getMonth();
+                        if (value.is_active === 1 && is_new && value.stock > 0) {
                             let real_price = (100 - value.discount) * 0.01 * value.price;
                             let tmp = `
                             <div class="card mt-4" style="width: 14rem;">
@@ -326,7 +327,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <p class="card-description">${value.description}</p>
                                 </div>
                                 <div class="card-footer">
-                                    <button class="btn btn-block btn-outline-dark">Buy</button>
+                                    <button class="buy-btn btn btn-block btn-outline-dark" product-id=${value.id}>Buy</button>
                                 </div>
                             </div>
                             `;
@@ -346,7 +347,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         <p class="card-description">${value.description}</p>
                                     </div>
                                     <div class="card-footer">
-                                        <button class="btn btn-block btn-outline-dark">Buy</button>
+                                        <button class="buy-btn btn btn-block btn-outline-dark" product-id='${value.id}'>Buy</button>
                                     </div>
                                 </div>
                             `;
@@ -358,6 +359,62 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 }).fail(function(data) {
                     console.log(data);
                 });
+                buyClickEvent();
+
+        }
+
+        function buyClickEvent() {
+            $('.buy-btn').click(function(index) {
+                // console.log($(this).attr('product-id'));
+                $.post("/EPT_Beauty/back_end/cart_api/add_cart.php", {
+                    user_email: getCookie('email'),
+                    product_id: $(this).attr('product-id')
+                }).done(function(data) {
+                        // console.log(data.is_complete);
+
+                        if (!data.is_complete) {
+                            let status = 'error';
+                            let message = data.message;
+
+                            Toast.fire(
+                                'Error!',
+                                message,
+                                status
+                            ).then(() => {
+                                window.location.href = "../";
+                            })
+                        }
+                        loadCart();
+
+                    }).fail(function(data) {
+                        console.log(data);
+                    });
+            });
+        }
+
+        function loadCart() {
+            if (getCookie('email')) {
+                $.post("/EPT_Beauty/back_end/cart_api/get_carts_by_user.php", {
+                    user_email: getCookie('email')
+                }).done(function(data) {
+                    if (!data.is_complete) {
+                        let status = 'error';
+                        let message = data.message;
+
+                        Toast.fire(
+                            'Error!',
+                            message,
+                            status
+                        ).then(() => {
+                            window.location.href = "../";
+                        })
+                    }
+                    $('.cart-count').text(data.data.length);
+
+                }).fail(function(data) {
+                    console.log(data);
+                });
+            }
         }
     </script>
 </body>

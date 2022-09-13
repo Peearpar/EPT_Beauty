@@ -2,7 +2,7 @@
     function fetchToken($email, $result)
     {
         $token  =   md5(uniqid(microtime(), true) . $email);
-        $_SESSION['token'][$email] = ['token' => $token, 'role' => $result['role'], 'is_validate' => false];
+        $_SESSION['token'][$email] = ['token' => $token, 'role' => $result['role'], 'is_validate' => false, 'user_id' => $result['id']];
         if($result['role'] === 'admin')
         {
             $_SESSION['token'][$email]['is_validate'] = true;

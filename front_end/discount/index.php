@@ -303,7 +303,7 @@
                     }
 
                     data.data.map((value) => {
-                        if (value.discount > 0 && value.is_active === 1) {
+                        if (value.discount > 0 && value.is_active === 1 && value.stock > 0) {
                             let real_price = (100 - value.discount) * 0.01 * value.price;
                             let tmp = `
                             <div class="card mt-4" style="width: 14rem;">

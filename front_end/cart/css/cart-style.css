@@ -20,6 +20,12 @@
     }
 }
 
+@media only screen and (max-width: 930px) {
+    .product-text {
+        width: 100px !important;
+    }
+}
+
 @media only screen and (max-width: 720px) {
     .cart_list {
         width: 100%;
@@ -29,6 +35,7 @@
         align-self: center;
     }
     .product-text {
+        width: 100% !important;
         text-align: center;
         margin: 0 !important;
     }
@@ -43,6 +50,9 @@
         margin: 0 !important;
         margin-top: 10px !important;
     }
+}
+.product-text {
+    width: 300px;
 }
 
 /* ขนาดรูปภาพของในcart */
@@ -71,4 +81,16 @@
     position: fixed;
     padding: 5px 30px 10px 30px;
     border-radius: 5px;
+}
+
+.price-contain {
+    width: 150px;
+}
+
+.disabledEvent {
+    pointer-events: none;
+}
+
+.disabledDiv {
+    opacity: 0.4;
 }
