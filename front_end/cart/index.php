@@ -324,26 +324,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         let real_price = (100 - value.discount) * 0.01 * value.price;
                         let tmp = `
                             <div class="d-flex cart bg-white mr-5 mt-3 p-3">
-                                <div class="cart_img align-self-center d-flex justify-content-center ${value.stock <= 0 ? 'disabledDiv' : ''}">
+                                <div class="cart_img align-self-center d-flex justify-content-center ${value.stock <= 0  || !value.is_active ? 'disabledDiv' : ''}">
                                     <img src="${value.path_img}" alt="productimages" class="mr-3">
                                 </div>
 
-                                <div class="mr-5 align-self-center product-text ${value.stock <= 0 ? 'disabledDiv' : ''}">
+                                <div class="mr-5 align-self-center product-text ${value.stock <= 0  || !value.is_active ? 'disabledDiv' : ''}">
                                     <p>${value.prod_name}</p>
                                     <p>${value.description}</p>
-                                    ${value.stock <= 0 ? '<p class="text-danger">Sold Out!</p>' : ''}
+                                    ${value.stock <= 0 || !value.is_active ? '<p class="text-danger">Sold Out!</p>' : ''}
                                 </div>
 
                                 <div class="mr-5 d-flex flex-column align-self-center btn-tools">
-                                    <button type="button" class="btn btn-success mb-3 d-none">Confirm</button>
-                                    <div class="btn-group w-50 mb-3 ${value.stock <= 0 ? 'disabledDiv' : ''}">
-                                        <button type="button" class="btn btn-dark minus ${value.stock <= 0 ? 'disabledEvent' : ''}">-</button>
+                                    <button type="button" class="btn btn-success mb-3 d-none" cart-id="${value.id}">Confirm</button>
+                                    <div class="btn-group w-50 mb-3 ${value.stock <= 0  || !value.is_active ? 'disabledDiv' : ''}">
+                                        <button type="button" class="btn btn-dark minus ${value.stock <= 0  || !value.is_active ? 'disabledEvent' : ''}">-</button>
                                         <div class="product-count form-control">${value.qty}</div>
-                                        <button type="button" class="btn btn-dark plus ${value.stock <= 0 ? 'disabledEvent' : ''}">+</button>
+                                        <button type="button" class="btn btn-dark plus ${value.stock <= 0  || !value.is_active ? 'disabledEvent' : ''}">+</button>
                                     </div>
-                                    <button type="button" class="btn btn-danger">Delete</button>
+                                    <button type="button" class="btn btn-danger" cart-id="${value.id}">Delete</button>
                                 </div>
-                                <div class="d-flex flex-column align-self-center price-contain ${value.stock <= 0 ? 'disabledDiv' : ''}">
+                                <div class="d-flex flex-column align-self-center price-contain ${value.stock <= 0  || !value.is_active ? 'disabledDiv' : ''}">
                                     ${value.discount > 0 ? `
                                     <h6 class="mr-5 price align-self-center price-1">฿${numberFormat(real_price)}</p>
                                     <h6 class="text-danger mr-5 price align-self-center"><s>฿${numberFormat(value.price)}</s></p>` : 

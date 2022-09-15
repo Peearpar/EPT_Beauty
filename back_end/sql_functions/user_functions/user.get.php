@@ -1,6 +1,5 @@
 <?php
-    define('__ROOT__', dirname(dirname(__FILE__)));
-    require_once(__ROOT__.'/connection.php');
+    require_once(dirname(dirname(__FILE__)).'/connection.php');
     header('Content-Type: application/json; charset=utf-8');
 
 

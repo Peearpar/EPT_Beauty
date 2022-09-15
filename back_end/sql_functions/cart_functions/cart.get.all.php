@@ -3,7 +3,7 @@
     require_once(__ROOT__.'/connection.php');
     header('Content-Type: application/json; charset=utf-8');
 
-    function getByid($user_id){
+    function getCartByid($user_id){
         $conn = connection();
 
         // prepare and bind
@@ -57,6 +57,31 @@
 
         return $output_datas;
 
+    }
+
+    function getSumCart($user_id) {
+        $conn = connection();
+
+        // prepare and bind
+        $stmt = $conn->prepare("
+        SELECT sum((100 - products.discount) * 0.01 * carts.qty * products.price) 
+        AS sum
+        FROM ept_beauty.carts
+        INNER JOIN `ept_beauty`.products
+        ON products.id = carts.product_id
+        WHERE carts.user_id = ?;");
+
+        $stmt->bind_param("i",
+        $user_id);
+
+        // set parameters and execute
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_assoc();
+
+        $stmt->close();
+        $conn->close();
+
+        return $result['sum'];
     }
 
 ?>

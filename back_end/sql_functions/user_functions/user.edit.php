@@ -1,7 +1,5 @@
 <?php
-    define('__ROOT__', dirname(dirname(__FILE__)));
-
-    require_once(__ROOT__ .'/connection.php');
+    require_once(dirname(dirname(__FILE__)) .'/connection.php');
     header('Content-Type: application/json; charset=utf-8');
 
     function editUser(
@@ -45,14 +43,6 @@
 
         // set parameters and execute
         $stmt->execute();
-
-        echo json_encode(
-            [
-                'is_complete' => true,
-                'message' => 'user edit complete',
-                'data' => [],
-            ]
-        );
 
         $stmt->close();
         $conn->close();

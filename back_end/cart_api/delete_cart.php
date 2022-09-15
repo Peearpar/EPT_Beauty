@@ -1,5 +1,5 @@
 <?php 
-    require_once '../sql_functions/cart_functions/cart.get.all.php';
+    require_once '../sql_functions/cart_functions/cart.delete.php';
     session_start();
 
     if(!isset($_SESSION['token'][$_POST['user_email']]))
@@ -15,12 +15,7 @@
 
     $user_id = $_SESSION['token'][$_POST['user_email']]['user_id'];
 
-    echo json_encode(
-        [
-            'is_complete' => true,
-            'message' => 'carts',
-            'data' => getCartByid($user_id)
-        ]
+    return deleteCart(
+        $_POST['cart_id']
     );
-    return;
 ?>

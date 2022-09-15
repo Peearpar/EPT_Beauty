@@ -15,8 +15,8 @@
             $address = $_POST['address'];
             $credit = $_POST['credit'];
             $role = $_POST['role'];
-        
-            return editUser(
+
+            editUser(
                 $id,
                 $name, 
                 $surname, 
@@ -27,6 +27,15 @@
                 $credit, 
                 $role
             );
+        
+            echo json_encode(
+                [
+                    'is_complete' => true,
+                    'message' => 'user edit complete',
+                    'data' => [],
+                ]
+            );
+            return;
         }
     }
 ?>
