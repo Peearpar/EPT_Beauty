@@ -111,7 +111,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="cart" href="cart/index.php">
+                            <a class="nav-link" id="cart" href="#">
                                 <i class="fa-solid fa-cart-shopping"></i>
                                 <span class="badge badge-danger navbar-badge cart-count">3</span>
                             </a>
@@ -147,7 +147,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <p>BOBBI BROWN</p>
                                 <p>Vitamin Enriched Face Base 50 ml.</p>
                             </div>
-
                             <div class="mr-5 d-flex flex-column align-self-center btn-tools">
                                 <button type="button" class="btn btn-success mb-3 d-none">Confirm</button>
                                 <div class="btn-group w-50 mb-3">
@@ -228,23 +227,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </div> -->
                     </div>
 
-                    <div class="mt-3 total-content">
-                        <div class="total bg-dark d-flex flex-column">
-                            <div class="d-flex justify-content-between mt-3">
-                                <p>Items</p>
-                                <p id="count-item">4</p>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <p>Total</p>
-                                <p id="amount">฿2,500</p>
-                            </div>
-                            <button type="button" class="btn btn-danger">CHECKOUT</button>
+                <!-- Checkout Box -->
+                <div class="mt-3 total-content">
+                    <div class="total bg-dark d-flex flex-column">
+                        <div class="d-flex justify-content-between mt-3">
+                            <p>Items</p>
+                            <p id="count-item">4</p>
                         </div>
+                        <div class="d-flex justify-content-between">
+                            <p>Total</p>
+                            <p id="amount">฿2,500</p>
+                        </div>
+                        <button type="button" class="btn btn-danger">CHECKOUT</button>
                     </div>
                 </div>
-
             </div>
         </div>
+    </div>
     </div>
 
     <!-- Control Sidebar -->
@@ -329,9 +328,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </div>
 
                                 <div class="mr-5 align-self-center product-text ${value.stock <= 0  || !value.is_active ? 'disabledDiv' : ''}">
-                                    <p>${value.prod_name}</p>
+                                    <p class="card-text-name">${value.prod_name}</p>
                                     <p>${value.description}</p>
-                                    ${value.stock <= 0 || !value.is_active ? '<p class="text-danger">Sold Out!</p>' : ''}
+                                    ${value.stock <= 0 || !value.is_active ? '<p class="text-danger">Sold Out</p>' : ''}
                                 </div>
 
                                 <div class="mr-5 d-flex flex-column align-self-center btn-tools">
@@ -346,7 +345,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <div class="d-flex flex-column align-self-center price-contain ${value.stock <= 0  || !value.is_active ? 'disabledDiv' : ''}">
                                     ${value.discount > 0 ? `
                                     <h6 class="mr-5 price align-self-center price-1">฿${numberFormat(real_price)}</p>
-                                    <h6 class="text-danger mr-5 price align-self-center"><s>฿${numberFormat(value.price)}</s></p>` : 
+                                    <h6 class="text-danger mr-5 price align-self-center"><s>฿${numberFormat(value.price)}</s></p>` :
                                     `<h6 class="mr-5 price align-self-center price-1">฿${numberFormat(value.price)}</h6>`}
 
                                 </div>
