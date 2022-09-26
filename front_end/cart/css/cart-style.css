@@ -18,11 +18,16 @@
     footer {
         height: 200px;
     }
+    
 }
 
 @media only screen and (max-width: 930px) {
     .product-text {
         width: 100px !important;
+    }
+
+    .empty-cart  {
+        width: 100% !important;
     }
 }
 
@@ -50,6 +55,11 @@
         margin: 0 !important;
         margin-top: 10px !important;
     }
+
+    .empty-cart  {
+        width: 100% !important;
+    }
+   
 }
 .product-text {
     width: 300px;
@@ -93,4 +103,15 @@
 
 .disabledDiv {
     opacity: 0.4;
+}
+
+.empty-cart  {
+    width: 800px;
+    border-radius: 5px;
+    font-size: larger;
+    background-color: white;
+}
+
+.btn-home {
+    max-width: 200px;
 }

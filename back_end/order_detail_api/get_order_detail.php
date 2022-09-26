@@ -1,9 +1,9 @@
-<?php 
+<?php
     require_once '../sql_functions/order_detail_functions/order_detail.get.php';
 
     session_start();
 
-    if(!isset($_SESSION['token'][$_POST['user_email']]['is_validate']) 
+    if(!isset($_SESSION['token'][$_POST['user_email']]['is_validate'])
     || !$_SESSION['token'][$_POST['user_email']]['is_validate'])
     {
         echo json_encode(

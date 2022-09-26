@@ -101,7 +101,7 @@
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
-              <a href="#" class="nav-link active">
+              <a href="../orders" class="nav-link active">
                 <i class="fa-solid fa-cart-arrow-down"></i>
                 <p>
                   Orders
@@ -134,7 +134,7 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">Orders</h1>
+              <h1 class="m-0">Order Details</h1>
             </div>
           </div>
         </div>
@@ -145,55 +145,112 @@
         <div class="container-fluid">
           <!-- Small boxes (Stat box) -->
           <div class="row">
-            <div class="col-lg-3 col-6">
-              <!-- small box -->
-              <div class="small-box bg-warning">
-                <div class="inner">
-                  <h3 id="order-count">44</h3>
-
-                  <p>Orders</p>
+            <!-- small box -->
+            <div class="row col-12">
+              <div class="col-lg-3 col-6">
+                <div class="small-box bg-info">
+                  <div class="inner">
+                    <h3 id="order-detail-count">44</h3>
+                    <p>Order Details</p>
+                  </div>
+                  <div class="icon">
+                    <i class="fa-solid fa-folder-open"></i>
+                  </div>
                 </div>
-                <div class="icon">
-                  <i class="fa-solid fa-cart-arrow-down"></i>
+              </div>
+
+              <!-- small box -->
+              <div class="col-lg-3 col-6">
+                <div class="small-box bg-danger">
+                  <div class="inner">
+                    <h3 id="order-detail-sum">44</h3>
+                    <p>Total</p>
+                  </div>
+                  <div class="icon">
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+                  </div>
                 </div>
               </div>
             </div>
-            <!-- ./col -->
+
+            <div class="col-12">
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title" id="user-id">User id</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form>
+                  <div class="card-body">
+                    <div class="form-row">
+                      <div class="col">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" readonly="readonly">
+                      </div>
+                      <div class="col">
+                        <label for="surname">Surname</label>
+                        <input type="text" class="form-control" id="surname" readonly="readonly">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="email">Email</label>
+                      <input type="email" class="form-control" id="email" readonly="readonly">
+                    </div>
+                    <div class="form-row">
+                      <div class="col">
+                        <label for="district">District</label>
+                        <input type="text" class="form-control" id="district" readonly="readonly">
+                      </div>
+                      <div class="col">
+                        <label for="sub-district">Sub-District</label>
+                        <input type="text" class="form-control" id="sub-district" readonly="readonly">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="zip_code">Zip_Code</label>
+                      <input type="number" class="form-control" id="zip_code" readonly="readonly">
+                    </div>
+                    <div class="form-group">
+                      <label for="address">Address</label>
+                      <input type="text" class="form-control" id="address" readonly="readonly">
+                    </div>
+                    <div class="form-row">
+                      <div class="col">
+                        <label for="credit">Credit</label>
+                        <input type="text" class="form-control" id="credit" readonly="readonly">
+                      </div>
+                      <div class="col">
+                        <label>Role</label>
+                        <input type="text" class="form-control" id="role" readonly="readonly">
+                      </div>
+                    </div>
+                  </div>
+                </form>
+
+              </div>
+            </div>
+
+
+            <!-- ./col table -->
             <div class="col-12">
               <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">DataTable with minimal features & hover style</h3>
-                </div>
                 <!-- /.card-header -->
                 <div class="card-body">
                   <table id="data-table" class="table table-bordered table-hover">
                     <thead>
                       <tr>
                         <th>id</th>
-                        <th>user_id</th>
-                        <th>status</th>
+                        <th>order_id</th>
+                        <th>image</th>
+                        <th>cat_name</th>
+                        <th>prod_name</th>
+                        <th>qty</th>
+                        <th>price</th>
+                        <th>discount</th>
                         <th>created_at</th>
-                        <th>order-detail</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <!-- <td>1</td>
-                      <td>name123</td>
-                      <td>2022-01-01 12:12:12</td>
-                      <td>
-                        <div class="d-flex justify-content-center">
-                          <select class="custom-select w-75" id="category">
-                            <option value="" disabled selected hidden>Please Choose...</option>
-                            <option>confirm</option>
-                            <option>cancel</option>
-                          </select>
-                        </div>
-                      </td>
-                      <td>
-                        <div class="d-flex justify-content-center">
-                          <a href="#" class="btn btn-primary">check-detail</a>
-                        </div>
-                      </td> -->
                     </tbody>
                   </table>
                 </div>
@@ -238,6 +295,7 @@
 
   <script>
     $(function() {
+      loadUser();
       let table = $('#data-table').DataTable({
         "paging": true,
         "lengthChange": true,
@@ -248,105 +306,119 @@
         "responsive": true,
         ajax: async (data, callback) => {
           const datas = await $.post({
-            url: "/EPT_Beauty/back_end/order_api/get_orders.php",
+            url: "/EPT_Beauty/back_end/order_detail_api/get_order_detail.php",
           }, {
+            order_id: getParam().order_id,
             user_email: getCookie('email')
           });
 
+          const sumResult = datas.data.reduce((sum, data) => {
+            return sum + (100 - data.discount) * 0.01 * data.price * data.qty;
+          }, 0);
+
           // set count users
-          $('#order-count').html(datas.data.length);
+          $('#order-detail-count').html(datas.data.length);
+          $('#order-detail-sum').html('฿' + numberFormat(sumResult));
+
           callback(datas);
         },
         columnDefs: [{
-            targets: -1,
-            data: null,
-            defaultContent: `
-            <div class="d-flex justify-content-center">
-              <button class="btn btn-primary btn-detail">check-detail</button>
-            </div>`,
+            targets: 2,
+            data: 'path_img',
+            render: function(data, type, row, meta) {
+              return `
+              <div class="d-flex justify-content-around">
+                <img src="${data}" alt="${data}"  width="50px"/>
+              </div>`;
+            }
+          },
+          {
+            targets: -2,
+            data: 'discount',
+            render: function(data, type, row, meta) {
+              return data + '%';
+            }
           },
           {
             targets: -3,
-            data: 'status',
+            data: 'price',
             render: function(data, type, row, meta) {
-              const options = [
-                'wait',
-                'confirmed',
-                'cancel',
-              ];
-              return `
-              <div class="d-flex justify-content-center">
-                <select class="custom-select w-75" id="category">
-                  ${ options.map((value)=> {
-                    return `<option ${value === data ? 'selected' : "" } >
-                      ${value}
-                    </option>`
-                  }) }
-                </select>
-              </div>`;
-            },
+              return '฿' + numberFormat(data);
+            }
           }
         ],
         columns: [{
             data: 'id'
           },
           {
-            data: 'user_id'
+            data: 'order_id'
           },
           {
-            data: 'status'
+            data: 'path_img'
+          },
+          {
+            data: 'category_name'
+          },
+          {
+            data: 'prod_name'
+          },
+          {
+            data: 'qty'
+          },
+          {
+            data: 'price'
+          },
+          {
+            data: 'discount'
           },
           {
             data: 'created_at'
-          },
-          {
-            data: null
           }
         ]
       });
-      $('#data-table tbody').on('click', '.btn-detail', function(e) {
-        var data = table.row($(this).parents('tr')).data();
-        e.preventDefault();
-        window.location.href = `../order_details?user_id=${data.user_id}&order_id=${data.id}`;
-      });
-      $('#data-table tbody').on('change', '.custom-select', function(e) {
-        var data = table.row($(this).parents('tr')).data();
-        let status = this.value;
-        let order_id = data.id;
-        e.preventDefault();
-        changeStatus(status, order_id);
-      });
     });
 
-    function changeStatus(status, order_id) {
+    function getParam() {
+      const params = new Proxy(new URLSearchParams(window.location.search), {
+        get: (searchParams, prop) => searchParams.get(prop),
+      });
 
-      $.post("/EPT_Beauty/back_end/order_api/edit_order_status.php", {
-        status: status,
-        order_id: order_id,
+      return params;
+    }
+
+    function loadUser() {
+      const id = getParam();
+
+      $.post("/EPT_Beauty/back_end/user_api/get_user_by_id.php", {
+        id: getParam().user_id,
         user_email: getCookie('email')
       }).done(function(data) {
         console.log(data.is_complete);
 
-        let status = 'success';
-        let message = data.message;
-
         if (!data.is_complete) {
-          status = 'error';
+          let status = 'error';
+          let message = data.message;
+
+          Toast.fire(
+            'Error!',
+            message,
+            status
+          ).then(() => {
+            window.location.href = "../";
+          })
         }
 
-        var Toast = Swal.mixin({
-          showConfirmButton: false,
-          timer: 2000,
-          icon: status,
-        });
+        $('#user-id').html(`User id = ${data.data.id}`);
+        $('#name').attr('value', data.data.name);
+        $('#surname').attr('value', data.data.surname);
+        $('#email').attr('value', data.data.email);
+        $('#district').attr('value', data.data.district);
+        $('#sub-district').attr('value', data.data.sub_district);
+        $('#zip_code').attr('value', data.data.zip_code);
+        $('#address').attr('value', data.data.address);
+        $('#credit').attr('value', '฿' + numberFormat(data.data.credit));
+        $('#role').attr('value', data.data.role);
 
-        Toast.fire(
-          message,
-        ).then(() => {
-          if (data.is_complete) {
-            location.reload();
-          }
-        })
       }).fail(function(data) {
         console.log(data);
       });

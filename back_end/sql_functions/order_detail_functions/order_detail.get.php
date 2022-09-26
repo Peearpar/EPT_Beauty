@@ -11,10 +11,15 @@
         SELECT *, 
         order_detail.id as ord_id ,
         order_detail.price as ord_price ,
-        order_detail.discount as ord_discount
+        order_detail.discount as ord_discount ,
+        categories.name as cat_name ,
+        products.name as prod_name 
+
         FROM ept_beauty.order_detail
         INNER JOIN products
         ON order_detail.product_id = products.id
+        INNER JOIN categories
+        ON products.category_id = categories.id
         where order_detail.order_id = ?;");
 
         // set parameters and execute
@@ -31,8 +36,9 @@
         $output_datas = [];
         foreach ($result as $value) {
             $output_data['id'] = $value['ord_id'];
-            $output_data['category_id'] = $value['category_id'];
-            $output_data['prod_name'] = $value['name'];
+            $output_data['order_id'] = $value['order_id'];
+            $output_data['category_name'] = $value['cat_name'];
+            $output_data['prod_name'] = $value['prod_name'];
             $output_data['path_img'] = $escaped_url . $value['path_img'];
             $output_data['short_path_img'] = $value['path_img'];
             $output_data['price'] = $value['ord_price'];

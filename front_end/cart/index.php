@@ -227,23 +227,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </div> -->
                     </div>
 
-                <!-- Checkout Box -->
-                <div class="mt-3 total-content">
-                    <div class="total bg-dark d-flex flex-column">
-                        <div class="d-flex justify-content-between mt-3">
-                            <p>Items</p>
-                            <p id="count-item">4</p>
+                    <!-- Checkout Box -->
+                    <div class="mt-5 total-content">
+                        <div class="total bg-dark d-flex flex-column">
+                            <div class="d-flex justify-content-between mt-3">
+                                <p>Items</p>
+                                <p id="count-item">4</p>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <p>Total</p>
+                                <p id="amount">฿2,500</p>
+                            </div>
+                            <button type="button" class="btn btn-danger">CHECKOUT</button>
                         </div>
-                        <div class="d-flex justify-content-between">
-                            <p>Total</p>
-                            <p id="amount">฿2,500</p>
-                        </div>
-                        <button type="button" class="btn btn-danger">CHECKOUT</button>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 
     <!-- Control Sidebar -->
@@ -318,6 +318,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         })
                     }
                     $('.cart-count').text(data.data.length);
+
+                    if(data.data.length === 0) {
+                        let tmp = `<div class="empty-cart d-flex flex-column text-center mr-5 mt-5 p-5">
+                                        <p>Your shopping cart is currently empty.</p>
+                                        <a href="../" class="btn btn-primary btn-home text-white align-self-center mt-4">Go to shopping</a>
+                                    </div>`;
+
+                        $('.cart_list').append(tmp);
+                    }
 
                     data.data.map((value) => {
                         let real_price = (100 - value.discount) * 0.01 * value.price;
