@@ -41,7 +41,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <li class="nav-item">
                             <a href="../new_product/index.php" class="nav-link">NewProduct</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item active">
                             <a href="index.php" class="nav-link">BestSeller</a>
                         </li>
                         <li class="nav-item">
@@ -233,7 +233,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <script>
         $(function() {
-            loadProduct();
+            loadProduct(4);
             window.onscroll = function() { ////// ให้ nav bar เลื่อนตามลงมา
                 myFunction()
             };
@@ -289,11 +289,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
         }
 
         //////load ข้อมูล ptoduct ทั้งหมดมาก่อน
-        function loadProduct() {
-            $.get("/EPT_Beauty/back_end/products_api/get_products.php")
+        function loadProduct(limit) {
+            $.get("/EPT_Beauty/back_end/products_api/get_best_seller_products.php?limit=" + limit)
                 .done(function(data) {
                     console.log(data.is_complete);
-
                     if (!data.is_complete) {
                         let status = 'error';
                         let message = data.message;
@@ -308,14 +307,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     }
 
                     data.data.map((value) => {
-                        if (value.discount > 0 && value.is_active === 1) {
+                        if (value.is_active === 1) {
                             let real_price = (100 - value.discount) * 0.01 * value.price;
                             let tmp = `
                             <div class="card mt-4" style="width: 14rem;">
                                 <div class="ribbon-wrapper ribbon-lg">
-                                    <div class="ribbon bg-warning">
+                                    ${value.discount > 0 ?
+                                    `<div class="ribbon bg-danger">
+                                        Discount
+                                    </div>` :
+                                    `<div class="ribbon bg-warning">
                                         Best Seller
-                                    </div>
+                                    </div>`}
+
                                 </div>
                                 <img src="${value.path_img}" class="card-img-top" alt="">
                                 <div class="card-body">
@@ -336,7 +340,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     console.log(data);
                 });
         }
-        
     </script>
 </body>
 

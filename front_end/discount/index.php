@@ -40,7 +40,7 @@
                         <li class="nav-item">
                             <a href="../bestseller/index.php" class="nav-link">BestSeller</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item active">
                             <a href="index.php" class="nav-link">Discount</a>
                         </li>
                     </ul>
