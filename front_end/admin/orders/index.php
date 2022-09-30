@@ -49,11 +49,11 @@
       <ul class="navbar-nav ml-auto">
         <!-- Accounts Dropdown Menu -->
         <li class="nav-item dropdown">
-          <a class="nav-link" data-toggle="dropdown" href="#">
+          <a class="nav-link" data-toggle="dropdown" href="#" id="user">
             <i class="far fa-user"></i>
           </a>
           <div class="dropdown-menu dropdown-menu dropdown-menu-right">
-            <a href="#" class="dropdown-item">
+            <a href="#" class="dropdown-item" id="logout">
               <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i>
               Log out
             </a>
@@ -238,6 +238,8 @@
 
   <script>
     $(function() {
+      validateAdminPermission(getCookie('email'), getCookie('token'));
+      $('#user').html(`<i class="far fa-user"></i> ${getCookie('name')}`);
       let table = $('#data-table').DataTable({
         "paging": true,
         "lengthChange": true,
@@ -316,6 +318,8 @@
         e.preventDefault();
         changeStatus(status, order_id);
       });
+
+      logout();
     });
 
     function changeStatus(status, order_id) {

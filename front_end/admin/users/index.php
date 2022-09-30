@@ -323,7 +323,7 @@
         window.location.href = `edit/?id=${data.id}`;
       });
 
-      $('#logout').click(() => { ////ถ้าเกิดการคลิก Selector ตัว logout ให้ทำการลบคุกกี้ทิ้ง แล้ว reload หน้่าใหม่ (Jquery)
+      $('#logout').click(() => {
         deleteCookie('token', '/');
         deleteCookie('name', '/');
         deleteCookie('email', '/');

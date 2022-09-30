@@ -230,6 +230,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="../admin/dist/js/adminlte.min.js"></script>
     <!-- MyJs -->
     <script src="../js/script.js"></script>
+    <!-- sweetalert2 -->
+    <script src="../sweetalert2/sweetalert2@11.js"></script>
 
     <script>
         $(function() {
@@ -246,14 +248,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             } else {
                 $('#is_login').remove(); ///// ถ้าไม่มี token ให้ลบ is_login แทน
             }
-            $('#logout').click(() => { ////ถ้าเกิดการคลิก Selecter ตัว logout ให้ทำการลบคุกกี้ทิ้ง แล้ว reload หน้่าใหม่ (Jquery)
-                deleteCookie('token', '/');
-                deleteCookie('name', '/');
-                deleteCookie('email', '/');
-                deleteCookie('credit', '/');
-
-                location.reload();
-            });
+            logout();
         });
 
         /////function fix nav bar ให้ตามลงมาด้านล่างเสมอ
@@ -358,7 +353,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 }).fail(function(data) {
                     console.log(data);
                 });
-                buyClickEvent();
+            buyClickEvent();
 
         }
 
@@ -369,25 +364,25 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     user_email: getCookie('email'),
                     product_id: $(this).attr('product-id')
                 }).done(function(data) {
-                        // console.log(data.is_complete);
+                    // console.log(data.is_complete);
 
-                        if (!data.is_complete) {
-                            let status = 'error';
-                            let message = data.message;
+                    if (!data.is_complete) {
+                        let status = 'error';
+                        let message = data.message;
 
-                            Toast.fire(
-                                'Error!',
-                                message,
-                                status
-                            ).then(() => {
-                                window.location.href = "../";
-                            })
-                        }
-                        loadCart();
+                        Toast.fire(
+                            'Error!',
+                            message,
+                            status
+                        ).then(() => {
+                            window.location.href = "../";
+                        })
+                    }
+                    loadCart();
 
-                    }).fail(function(data) {
-                        console.log(data);
-                    });
+                }).fail(function(data) {
+                    alertlogin();
+                });
             });
         }
 

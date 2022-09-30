@@ -131,7 +131,7 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">Overveiw</h1>
+              <h1 class="m-0">Overview</h1>
             </div>
           </div>
         </div>
@@ -146,7 +146,7 @@
               <!-- small box -->
               <div class="small-box bg-info">
                 <div class="inner">
-                  <h3>150</h3>
+                  <h3 id='product-count'>150</h3>
 
                   <p>Products</p>
                 </div>
@@ -160,7 +160,7 @@
               <!-- small box -->
               <div class="small-box bg-success">
                 <div class="inner">
-                  <h3>53</h3>
+                  <h3 id="category-count">53</h3>
 
                   <p>Categories</p>
                 </div>
@@ -174,7 +174,7 @@
               <!-- small box -->
               <div class="small-box bg-warning">
                 <div class="inner">
-                  <h3>44</h3>
+                  <h3 id="order-count">44</h3>
 
                   <p>Orders</p>
                 </div>
@@ -188,7 +188,7 @@
               <!-- small box -->
               <div class="small-box bg-danger">
                 <div class="inner">
-                  <h3>65</h3>
+                  <h3 id="user-count">65</h3>
 
                   <p>Users</p>
                 </div>
@@ -224,15 +224,8 @@
       validateAdminPermission(getCookie('email'), getCookie('token'));
       $('#user').html(`<i class="far fa-user"></i> ${getCookie('name')}`);
 
-      $('#logout').click(() => { ////ถ้าเกิดการคลิก Selector ตัว logout ให้ทำการลบคุกกี้ทิ้ง แล้ว reload หน้่าใหม่ (Jquery)
-        deleteCookie('token', '/');
-        deleteCookie('name', '/');
-        deleteCookie('email', '/');
-        deleteCookie('credit', '/');
 
-        location.reload();
-
-      });
+      logout();
     });
   </script>
 </body>

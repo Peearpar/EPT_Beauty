@@ -276,6 +276,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="admin/dist/js/adminlte.min.js"></script>
     <!-- MyJs -->
     <script src="js/script.js"></script>
+    <!-- sweetalert2 -->
+    <script src="sweetalert2/sweetalert2@11.js"></script>
 
     <script>
         $(function() {
@@ -284,7 +286,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             window.onscroll = function() { ////// ให้ nav bar เลื่อนตามลงมา
                 myFunction()
             };
-            if (getCookie('token')) { ////เชคว่าถ้ามี token ให้ทำอะไรต่อ
+            if (getCookie('token')) { /// /เชคว่าถ้ามี token ให้ทำอะไรต่อ
                 $('#not_login').remove(); //// สั่งให้ remove not_login
                 $('#d_name').html('<i class="fa fa-user"></i> ' + getCookie('name'));
                 $('#d_email').html(getCookie('email'));
@@ -292,48 +294,41 @@ scratch. This page gets rid of all links and provides the needed markup only.
             } else {
                 $('#is_login').remove(); ///// ถ้าไม่มี token ให้ลบ is_login แทน
             }
-            $('#logout').click(() => { ////ถ้าเกิดการคลิก Selector ตัว logout ให้ทำการลบคุกกี้ทิ้ง แล้ว reload หน้่าใหม่ (Jquery)
-                deleteCookie('token', '/');
-                deleteCookie('name', '/');
-                deleteCookie('email', '/');
-                deleteCookie('credit', '/');
-
-                location.reload();
-            });
+            logout();
         });
 
-        /////function fix nav bar ให้ตามลงมาด้านล่างเสมอ
-        function myFunction() {
-            var nav = document.getElementsByClassName('main-header')[0];
-            var contentHeader = document.getElementsByClassName('content-header')[0];
-            var fixed = contentHeader.offsetTop + contentHeader.offsetHeight;
+        // /////function fix nav bar ให้ตามลงมาด้านล่างเสมอ
+        // function myFunction() {
+        //     var nav = document.getElementsByClassName('main-header')[0];
+        //     var contentHeader = document.getElementsByClassName('content-header')[0];
+        //     var fixed = contentHeader.offsetTop + contentHeader.offsetHeight;
 
-            if (window.pageYOffset >= fixed) {
-                console.log(fixed);
-                nav.classList.add("fixed-top")
-            } else {
-                nav.classList.remove("fixed-top");
-            }
-        }
+        //     if (window.pageYOffset >= fixed) {
+        //         console.log(fixed);
+        //         nav.classList.add("fixed-top")
+        //     } else {
+        //         nav.classList.remove("fixed-top");
+        //     }
+        // }
 
-        ///// ทำการเชคcookie ก่อน ว่ามีมั้ย และลบทิ้ง
-        function deleteCookie(name, path, domain) {
-            if (getCookie(name)) {
-                document.cookie = name + "=" +
-                    ((path) ? ";path=" + path : "") +
-                    ((domain) ? ";domain=" + domain : "") +
-                    ";expires=Thu, 01 Jan 1970 00:00:01 GMT";
-            }
-        }
+        // ///// ทำการเชคcookie ก่อน ว่ามีมั้ย และลบทิ้ง
+        // function deleteCookie(name, path, domain) {
+        //     if (getCookie(name)) {
+        //         document.cookie = name + "=" +
+        //             ((path) ? ";path=" + path : "") +
+        //             ((domain) ? ";domain=" + domain : "") +
+        //             ";expires=Thu, 01 Jan 1970 00:00:01 GMT";
+        //     }
+        // }
 
-        function getCookie(name) { /////เป็นfunction ที่หั่น cookie เป็น key และ value แล้วค่อยแบ่ง value ออกมาตาม key อีกที
-            const cookieValue = document.cookie
-                .split('; ')
-                .find((row) => row.startsWith(name + '='))
-                ?.split('=')[1];
+        // function getCookie(name) { /////เป็นfunction ที่หั่น cookie เป็น key และ value แล้วค่อยแบ่ง value ออกมาตาม key อีกที
+        //     const cookieValue = document.cookie
+        //         .split('; ')
+        //         .find((row) => row.startsWith(name + '='))
+        //         ?.split('=')[1];
 
-            return cookieValue
-        }
+        //     return cookieValue
+        // }
 
         //////load ข้อมูล ptoduct ทั้งหมดมาก่อน
         async function loadProduct(limit) {
@@ -387,7 +382,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 }).fail(function(data) {
                     console.log(data);
                 });
-                buyClickEvent();
+            buyClickEvent();
         }
 
         function buyClickEvent() {
@@ -397,25 +392,25 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     user_email: getCookie('email'),
                     product_id: $(this).attr('product-id')
                 }).done(function(data) {
-                        // console.log(data.is_complete);
+                    // console.log(data.is_complete);
 
-                        if (!data.is_complete) {
-                            let status = 'error';
-                            let message = data.message;
+                    if (!data.is_complete) {
+                        let status = 'error';
+                        let message = data.message;
 
-                            Toast.fire(
-                                'Error!',
-                                message,
-                                status
-                            ).then(() => {
-                                window.location.href = "../";
-                            })
-                        }
-                        loadCart();
+                        Toast.fire(
+                            'Error!',
+                            message,
+                            status
+                        ).then(() => {
+                            window.location.href = "../";
+                        })
+                    }
+                    loadCart();
 
-                    }).fail(function(data) {
-                        console.log(data);
-                    });
+                }).fail(function(data) {
+                    alertlogin();
+                });
             });
         }
 
@@ -443,7 +438,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 });
             }
         }
-
     </script>
 
 

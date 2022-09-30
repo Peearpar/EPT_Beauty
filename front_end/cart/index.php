@@ -293,47 +293,51 @@ scratch. This page gets rid of all links and provides the needed markup only.
             } else {
                 $('#is_login').remove(); ///// ถ้าไม่มี token ให้ลบ is_login แทน
             }
-            $('#logout').click(() => { ////ถ้าเกิดการคลิก Selecter ตัว logout ให้ทำการลบคุกกี้ทิ้ง แล้ว ให้กลับไปหน้า Home (Jquery)
-                deleteCookie('token', '/');
-                deleteCookie('name', '/');
-                deleteCookie('email', '/');
-                deleteCookie('credit', '/');
-
-                window.location.href = "../";
-            });
+            logout();
         });
 
         async function loadCart() {
-            if (getCookie('email')) {
-                await $.post("/EPT_Beauty/back_end/cart_api/get_carts_by_user.php", {
-                    user_email: getCookie('email')
-                }).done(function(data) {
-                    if (!data.is_complete) {
-                        let status = 'error';
-                        let message = data.message;
 
-                        Toast.fire(
-                            'Error!',
-                            message,
-                            status
-                        ).then(() => {
-                            window.location.href = "../";
-                        })
-                    }
-                    $('.cart-count').text(data.data.length);
+            if (!getCookie('email')) {
+                window.location.href = "../"
+            }
+            await $.post("/EPT_Beauty/back_end/cart_api/get_carts_by_user.php", {
+                user_email: getCookie('email')
+            }).done(function(data) {
+                console.log(data);
+                if (!data.is_complete) {
+                    let status = 'error';
+                    let message = data.message;
+                    console.log(data);
+                    console.log(getCookie('email'));
 
-                    if (data.data.length === 0) {
-                        let tmp = `<div class="empty-cart d-flex flex-column text-center mr-5 mt-5 p-5">
+                    var Toast = Swal.mixin({
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+
+                    Toast.fire(
+                        'Error!',
+                        message,
+                        status
+                    ).then(async () => {
+                        await hardLogout();
+                    })
+                }
+                $('.cart-count').text(data.data.length);
+
+                if (data.data.length === 0) {
+                    let tmp = `<div class="empty-cart d-flex flex-column text-center mr-5 mt-5 p-5">
                                         <p>Your shopping cart is currently empty.</p>
                                         <a href="../" class="btn btn-primary btn-home text-white align-self-center mt-4">Go to shopping</a>
                                     </div>`;
 
-                        $('.cart_list').append(tmp);
-                    }
+                    $('.cart_list').append(tmp);
+                }
 
-                    data.data.map((value) => {
-                        let real_price = (100 - value.discount) * 0.01 * value.price;
-                        let tmp = `
+                data.data.map((value) => {
+                    let real_price = (100 - value.discount) * 0.01 * value.price;
+                    let tmp = `
                             <div class="d-flex cart bg-white mr-5 mt-3 p-3">
                                 <div class="cart_img align-self-center d-flex justify-content-center ${value.stock <= 0  || !value.is_active ? 'disabledDiv' : ''}">
                                     <img src="${value.path_img}" alt="productimages" class="mr-3">
@@ -364,20 +368,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <h3 class="price_sum align-self-center ${value.stock <= 0 ? 'disabledDiv' : ''}">฿${numberFormat(real_price * value.qty)}</h3>
                             </div>
                         `;
-                        $('.cart_list').append(tmp);
-                    });
-
-
-                }).fail(function(data) {
-                    console.log(data);
+                    $('.cart_list').append(tmp);
                 });
 
-                triggerClickEvent();
-                setInitPriceAndItem();
-                deleteClickEvent();
-                comfirmClickEvent();
-                checkOutClickEvent();
-            }
+
+            }).fail(function(data) {
+                console.log(data);
+            });
+
+            triggerClickEvent();
+            setInitPriceAndItem();
+            deleteClickEvent();
+            comfirmClickEvent();
+            checkOutClickEvent();
         }
 
         function deleteClickEvent() {

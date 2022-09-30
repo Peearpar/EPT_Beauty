@@ -50,7 +50,7 @@
             Admin
           </a>
           <div class="dropdown-menu dropdown-menu dropdown-menu-right">
-            <a href="#" class="dropdown-item"  id="logout">
+            <a href="#" class="dropdown-item" id="logout">
               <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i>
               Log out
             </a>
@@ -255,7 +255,7 @@
           })
         });
 
-        $('#logout').click(() => { ////ถ้าเกิดการคลิก Selector ตัว logout ให้ทำการลบคุกกี้ทิ้ง แล้ว reload หน้่าใหม่ (Jquery)
+        $('#logout').click(() => {
           deleteCookie('token', '/');
           deleteCookie('name', '/');
           deleteCookie('email', '/');
