@@ -280,7 +280,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
             }
         }
 
-
         function getCookie(name) { /////เป็นfunction ที่หั่น cookie เป็น key และ value แล้วค่อยแบ่ง value ออกมาตาม key อีกที
             const cookieValue = document.cookie
                 .split('; ')

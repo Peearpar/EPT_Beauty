@@ -238,7 +238,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <p>Total</p>
                                 <p id="amount">฿2,500</p>
                             </div>
-                            <button type="button" class="btn btn-danger">CHECKOUT</button>
+                            <button type="button" class="checkout-btn btn btn-danger">CHECKOUT</button>
                         </div>
                     </div>
                 </div>
@@ -273,8 +273,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="../admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../admin/dist/js/adminlte.min.js"></script>
-
+    <!-- sweetalert2 -->
+    <script src="../sweetalert2/sweetalert2@11.js"></script>
+    <!-- MyJs -->
     <script src="../js/script.js"></script>
+
 
     <script>
         $(function() {
@@ -319,7 +322,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     }
                     $('.cart-count').text(data.data.length);
 
-                    if(data.data.length === 0) {
+                    if (data.data.length === 0) {
                         let tmp = `<div class="empty-cart d-flex flex-column text-center mr-5 mt-5 p-5">
                                         <p>Your shopping cart is currently empty.</p>
                                         <a href="../" class="btn btn-primary btn-home text-white align-self-center mt-4">Go to shopping</a>
@@ -343,13 +346,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </div>
 
                                 <div class="mr-5 d-flex flex-column align-self-center btn-tools">
-                                    <button type="button" class="btn btn-success mb-3 d-none" cart-id="${value.id}">Confirm</button>
+                                    <button type="button" class="comfirm-btn btn btn-success mb-3 d-none" cart-id="${value.id}">Confirm</button>
                                     <div class="btn-group w-50 mb-3 ${value.stock <= 0  || !value.is_active ? 'disabledDiv' : ''}">
                                         <button type="button" class="btn btn-dark minus ${value.stock <= 0  || !value.is_active ? 'disabledEvent' : ''}">-</button>
                                         <div class="product-count form-control">${value.qty}</div>
                                         <button type="button" class="btn btn-dark plus ${value.stock <= 0  || !value.is_active ? 'disabledEvent' : ''}">+</button>
                                     </div>
-                                    <button type="button" class="btn btn-danger" cart-id="${value.id}">Delete</button>
+                                    <button type="button" class="delete-btn btn btn-danger" cart-id="${value.id}">Delete</button>
                                 </div>
                                 <div class="d-flex flex-column align-self-center price-contain ${value.stock <= 0  || !value.is_active ? 'disabledDiv' : ''}">
                                     ${value.discount > 0 ? `
@@ -371,7 +374,116 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                 triggerClickEvent();
                 setInitPriceAndItem();
+                deleteClickEvent();
+                comfirmClickEvent();
+                checkOutClickEvent();
             }
+        }
+
+        function deleteClickEvent() {
+            $('.delete-btn').click(function(index) {
+                console.log($(this).attr('cart-id'));
+                $.post("/EPT_Beauty/back_end/cart_api/delete_cart.php", {
+                    user_email: getCookie('email'),
+                    cart_id: $(this).attr('cart-id')
+                }).done(function(data) {
+                    // console.log(data.is_complete);
+
+                    if (!data.is_complete) {
+                        let status = 'error';
+                        let message = data.message;
+
+                        Toast.fire(
+                            'Error!',
+                            message,
+                            status
+                        ).then(() => {
+                            window.location.href = "../";
+                        })
+                    }
+                    location.reload();
+
+                }).fail(function(data) {
+                    console.log(data);
+                });
+            });
+        }
+
+        function comfirmClickEvent() {
+            $('.comfirm-btn').click(function(index) {
+                // console.log($(this).next().children('.product-count').text());
+                $.post("/EPT_Beauty/back_end/cart_api/edit_cart.php", {
+                    user_email: getCookie('email'),
+                    cart_id: $(this).attr('cart-id'),
+                    qty: $(this).next().children('.product-count').text()
+                }).done(function(data) {
+                    // console.log(data.is_complete);
+
+                    if (!data.is_complete) {
+                        let status = 'error';
+                        let message = data.message;
+
+                        Toast.fire(
+                            'Error!',
+                            message,
+                            status
+                        ).then(() => {
+                            window.location.href = "../";
+                        })
+                    }
+                    // location.reload();
+
+                }).fail(function(data) {
+                    console.log(data);
+                });
+            });
+        }
+
+        function checkOutClickEvent() {
+            $('.checkout-btn').click(function(index) {
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You wont to checkout?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, Checkout!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.post("/EPT_Beauty/back_end/cart_api/check_out_cart.php", {
+                            user_email: getCookie('email')
+                        }).done(function(data) {
+                            // console.log(data.is_complete);
+
+                            if (!data.is_complete) {
+                                let status = 'error';
+                                let message = data.message;
+
+                                Toast.fire(
+                                    'Error!',
+                                    message,
+                                    status
+                                ).then(() => {
+                                    window.location.href = "../";
+                                })
+                            }
+
+                        }).fail(function(data) {
+                            console.log(data);
+                        });
+                        Swal.fire(
+                                'Checkout!',
+                                'Completed.',
+                                'success'
+                            )
+                            .then(() => {
+                                location.reload();
+                            })
+                    }
+                })
+            });
         }
 
         function triggerClickEvent() {
