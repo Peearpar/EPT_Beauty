@@ -4,9 +4,9 @@
     if (isset($_GET['limit']) && is_numeric($_GET['limit'])) {
         $cur = date("Y-m-d");
         $d = new DateTime($cur);
-        $d->modify('first day of this month');
+        $d->modify('first day of January');
         $start_date = $d->format('Y-m-d');
-        $d->modify('last day of this month');
+        $d->modify('last day of December');
         $end_date = $d->format('Y-m-d');
 
         echo json_encode(

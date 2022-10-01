@@ -11,7 +11,7 @@
         [
             'is_complete' => true,
             'message' => 'Overview',
-            'data' => ['products' => count(getProducts()),'categories' => count(getCategories()),'order' => count(getOrders()),'users' => count(getUsers())]
+            'data' => ['products' => count(getProducts()),'categories' => count(getCategories()),'orders' => count(getOrders()),'users' => count(getUsers())]
         ]
     );
 

@@ -146,7 +146,7 @@
               <!-- small box -->
               <div class="small-box bg-info">
                 <div class="inner">
-                  <h3 id='product-count'>150</h3>
+                  <h3 id='products-count'>150</h3>
 
                   <p>Products</p>
                 </div>
@@ -160,7 +160,7 @@
               <!-- small box -->
               <div class="small-box bg-success">
                 <div class="inner">
-                  <h3 id="category-count">53</h3>
+                  <h3 id="categories-count">53</h3>
 
                   <p>Categories</p>
                 </div>
@@ -174,7 +174,7 @@
               <!-- small box -->
               <div class="small-box bg-warning">
                 <div class="inner">
-                  <h3 id="order-count">44</h3>
+                  <h3 id="orders-count">44</h3>
 
                   <p>Orders</p>
                 </div>
@@ -188,7 +188,7 @@
               <!-- small box -->
               <div class="small-box bg-danger">
                 <div class="inner">
-                  <h3 id="user-count">65</h3>
+                  <h3 id="users-count">65</h3>
 
                   <p>Users</p>
                 </div>
@@ -206,8 +206,6 @@
     <aside class="control-sidebar control-sidebar-dark">
       <!-- Control sidebar content goes here -->
     </aside>
-
-
   </div>
 
   <!-- jQuery -->
@@ -223,6 +221,33 @@
     $(function() {
       validateAdminPermission(getCookie('email'), getCookie('token'));
       $('#user').html(`<i class="far fa-user"></i> ${getCookie('name')}`);
+
+      $.get("/EPT_Beauty/back_end/overview_api/overview.php")
+          .done(function(data) {
+            console.log(data.is_complete);
+
+            if (!data.is_complete) {
+              let status = 'error';
+              let message = data.message;
+
+              Toast.fire(
+                'Error!',
+                message,
+                status
+              ).then(() => {
+                window.location.href = "../";
+              })
+            }
+            // set count all
+            $('#products-count').html(data.data.products);
+            $('#categories-count').html(data.data.categories);
+            $('#orders-count').html(data.data.orders);
+            $('#users-count').html(data.data.users);
+            
+
+          }).fail(function(data) {
+            console.log(data);
+          });
 
 
       logout();
