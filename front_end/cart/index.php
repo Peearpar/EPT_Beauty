@@ -26,7 +26,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand-md navbar-dark bg-dark">
             <div class="container">
-                <a href="index.php" class="navbar-brand">
+                <a href="#" class="navbar-brand">
                     <span class="brand-text font-weight-light">EPT Beauty</span>
                 </a>
 
@@ -53,9 +53,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </ul>
 
                     <!-- SEARCH FORM -->
-                    <form class="form-inline ml-0 ml-md-3 w-100">
+                    <form class="form-inline ml-0 ml-md-3 w-100" id="search-form">
                         <div class="w-100 input-group input-group-sm">
-                            <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                            <input class="form-control form-control-navbar" id="search_text" type="search" placeholder="Search" aria-label="Search">
                             <div class="input-group-append">
                                 <button class="btn btn-navbar" type="submit">
                                     <i class="fas fa-search"></i>
@@ -282,6 +282,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script>
         $(function() {
             loadCart();
+            searchSubmitEvent(1, 4);
             window.onscroll = function() { ////// ให้ nav bar เลื่อนตามลงมา
                 myFunction()
             };
@@ -338,7 +339,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 data.data.map((value) => {
                     let real_price = (100 - value.discount) * 0.01 * value.price;
                     let tmp = `
-                            <div class="d-flex cart bg-white mr-5 mt-3 p-3">
+                            <div class="d-flex cart bg-white mr-5 mt-5 p-5">
                                 <div class="cart_img align-self-center d-flex justify-content-center ${value.stock <= 0  || !value.is_active ? 'disabledDiv' : ''}">
                                     <img src="${value.path_img}" alt="productimages" class="mr-3">
                                 </div>

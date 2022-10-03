@@ -41,8 +41,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <li class="nav-item">
                             <a href="../new_product/index.php" class="nav-link">NewProduct</a>
                         </li>
-                        <li class="nav-item active">
-                            <a href="index.php" class="nav-link">BestSeller</a>
+                        <li class="nav-item">
+                            <a href="../bestseller/index.php" class="nav-link">BestSeller</a>
                         </li>
                         <li class="nav-item">
                             <a href="../discount/index.php" class="nav-link">Discount</a>
@@ -124,7 +124,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="container">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">BestSeller</h1>
+                        <h1 class="m-0">Search</h1>
                     </div>
                 </div>
             </div>
@@ -134,70 +134,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <div class="content-wrapper">
             <div class="container">
                 <div class="row mb-2 justify-content-center" id="card-items">
-                    <!-- <div class="card mt-4" style="width: 14rem;">
-                        <div class="ribbon-wrapper ribbon-lg">
-                            <div class="ribbon bg-warning">
-                                Best Seller
-                            </div>
-                        </div>
-                        <img src="../images/VitaminC.jpeg" class="card-img-top" alt="">
-                        <div class="card-body">
-                            <p class="card-text">฿2,500</p>
-                            <p class="card-text">BOBBI BROWN</p>
-                            <p>Vitamin Enriched Face Base 50 ml.</p>
-                        </div>
-                        <div class="card-footer">
-                            <button class="btn btn-block btn-outline-dark">Buy</button>
-                        </div>
-                    </div>
-                    <div class="card mt-4" style="width: 14rem;">
-                        <div class="ribbon-wrapper ribbon-lg">
-                            <div class="ribbon bg-warning">
-                                Best Seller
-                            </div>
-                        </div>
-                        <img src="../images/HydratingWaterFreshCream.jpeg" class="card-img-top" alt="">
-                        <div class="card-body">
-                            <p class="card-text">฿2,400</p>
-                            <p class="card-text">BOBBI BROWN</p>
-                            <p>Hydrating Water Fresh Cream 50 ml.</p>
-                        </div>
-                        <div class="card-footer">
-                            <button class="btn btn-block btn-outline-dark">Buy</button>
-                        </div>
-                    </div>
-                    <div class="card mt-4" style="width: 14rem;">
-                        <div class="ribbon-wrapper ribbon-lg">
-                            <div class="ribbon bg-warning">
-                                Best Seller
-                            </div>
-                        </div>
-                        <img src="../images/EXTRA REPAIR SERUM.webp" class="card-img-top" alt="">
-                        <div class="card-body">
-                            <p class="card-text">฿4,500</p>
-                            <p class="card-text">BOBBI BROWN</p>
-                            <p>EXTRA REPAIR SERUM 100 ml.</p>
-                        </div>
-                        <div class="card-footer">
-                            <button class="btn btn-block btn-outline-dark">Buy</button>
-                        </div>
-                    </div>
-                    <div class="card mt-4" style="width: 14rem;">
-                        <div class="ribbon-wrapper ribbon-lg">
-                            <div class="ribbon bg-warning">
-                                Best Seller
-                            </div>
-                        </div>
-                        <img src="../images/Soothing Cleansing Oil.webp" class="card-img-top" alt="">
-                        <div class="card-body">
-                            <p class="card-text">฿2,150</p>
-                            <p class="card-text">BOBBI BROWN</p>
-                            <p>Soothing Cleansing Oil 200 ml.</p>
-                        </div>
-                        <div class="card-footer">
-                            <button class="btn btn-block btn-outline-dark">Buy</button>
-                        </div>
-                    </div> -->
+                </div>
+                <div class="row mt-5 justify-content-end">
+                    <nav aria-label="...">
+                        <ul class="pagination">
+                            <!-- <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1">Previous</a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item active">
+                                <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">Next</a>
+                            </li> -->
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>
@@ -235,9 +188,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <script>
         $(function() {
-            loadProduct(4);
-            loadCart();
             searchSubmitEvent(1, 4);
+            getSearchProduct(getParam().search_text, getParam().page, getParam().pageSize);
+
+            // loadProduct(4);
+            loadCart();
             window.onscroll = function() { ////// ให้ nav bar เลื่อนตามลงมา
                 myFunction()
             };
@@ -251,122 +206,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
             }
             logout();
         });
-
-        // /////function fix nav bar ให้ตามลงมาด้านล่างเสมอ
-        // function myFunction() {
-        //     var nav = document.getElementsByClassName('main-header')[0];
-        //     var contentHeader = document.getElementsByClassName('content-header')[0];
-        //     var fixed = contentHeader.offsetTop + contentHeader.offsetHeight;
-
-        //     if (window.pageYOffset >= fixed) {
-        //         console.log(fixed);
-        //         nav.classList.add("fixed-top")
-        //     } else {
-        //         nav.classList.remove("fixed-top");
-        //     }
-        // }
-
-        // ///// ทำการเชคcookie ก่อน ว่ามีมั้ย และลบทิ้ง
-        // function deleteCookie(name, path, domain) {
-        //     if (getCookie(name)) {
-        //         document.cookie = name + "=" +
-        //             ((path) ? ";path=" + path : "") +
-        //             ((domain) ? ";domain=" + domain : "") +
-        //             ";expires=Thu, 01 Jan 1970 00:00:01 GMT";
-        //     }
-        // }
-
-        // function getCookie(name) { /////เป็นfunction ที่หั่น cookie เป็น key และ value แล้วค่อยแบ่ง value ออกมาตาม key อีกที
-        //     const cookieValue = document.cookie
-        //         .split('; ')
-        //         .find((row) => row.startsWith(name + '='))
-        //         ?.split('=')[1];
-
-        //     return cookieValue
-        // }
-
-        //////load ข้อมูล ptoduct ทั้งหมดมาก่อน
-        async function loadProduct(limit) {
-            await $.get("/EPT_Beauty/back_end/products_api/get_best_seller_products.php?limit=" + limit)
-                .done(function(data) {
-                    console.log(data.is_complete);
-                    if (!data.is_complete) {
-                        let status = 'error';
-                        let message = data.message;
-
-                        Toast.fire(
-                            'Error!',
-                            message,
-                            status
-                        ).then(() => {
-                            window.location.href = "../";
-                        })
-                    }
-
-                    data.data.map((value) => {
-                        if (value.is_active === 1) {
-                            let real_price = (100 - value.discount) * 0.01 * value.price;
-                            let tmp = `
-                            <div class="card mt-4" style="width: 14rem;">
-                                <div class="ribbon-wrapper ribbon-lg">
-                                    ${value.discount > 0 ?
-                                    `<div class="ribbon bg-danger">
-                                        Discount
-                                    </div>` :
-                                    `<div class="ribbon bg-warning">
-                                        Best Seller
-                                    </div>`}
-
-                                </div>
-                                <img src="${value.path_img}" class="card-img-top" alt="">
-                                <div class="card-body">
-                                    <p class="card-text-price"">฿${numberFormat(real_price)}</p>
-                                    <p class="card-text-name">${value.name}</p>
-                                    <p class="card-description">${value.description}</p>
-                                </div>
-                                <div class="card-footer">
-                                    <button class="buy-btn btn btn-block btn-outline-dark" product-id='${value.id}'>Buy</button>
-                                </div>
-                            </div>
-                            `;
-                            $('#card-items').append(tmp);
-                        }
-                    });
-
-                }).fail(function(data) {
-                    console.log(data);
-                });
-            buyClickEvent();
-        }
-
-        function buyClickEvent() {
-            $('.buy-btn').click(function(index) {
-                // console.log($(this).attr('product-id'));
-                $.post("/EPT_Beauty/back_end/cart_api/add_cart.php", {
-                    user_email: getCookie('email'),
-                    product_id: $(this).attr('product-id')
-                }).done(function(data) {
-                    // console.log(data.is_complete);
-
-                    if (!data.is_complete) {
-                        let status = 'error';
-                        let message = data.message;
-
-                        Toast.fire(
-                            'Error!',
-                            message,
-                            status
-                        ).then(() => {
-                            window.location.href = "../";
-                        })
-                    }
-                    loadCart();
-
-                }).fail(function(data) {
-                    alertlogin();
-                });
-            });
-        }
 
         function loadCart() {
             if (getCookie('email')) {
@@ -391,6 +230,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     console.log(data);
                 });
             }
+        }
+
+        function getParam() {
+            const params = new Proxy(new URLSearchParams(window.location.search), {
+                get: (searchParams, prop) => searchParams.get(prop),
+            });
+
+            return params;
         }
     </script>
 </body>

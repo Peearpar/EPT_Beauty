@@ -46,9 +46,9 @@
                     </ul>
 
                     <!-- SEARCH FORM -->
-                    <form class="form-inline ml-0 ml-md-3 w-100">
+                    <form class="form-inline ml-0 ml-md-3 w-100" id="search-form">
                         <div class="w-100 input-group input-group-sm">
-                            <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                            <input class="form-control form-control-navbar" id="search_text" type="search" placeholder="Search" aria-label="Search">
                             <div class="input-group-append">
                                 <button class="btn btn-navbar" type="submit">
                                     <i class="fas fa-search"></i>
@@ -233,6 +233,7 @@
         $(function() {
             loadProduct();
             loadCart();
+            searchSubmitEvent(1, 4);
             window.onscroll = function() { ////// ให้ nav bar เลื่อนตามลงมา
                 myFunction()
             };
