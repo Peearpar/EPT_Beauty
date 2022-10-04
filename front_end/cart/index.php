@@ -91,14 +91,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </li>
 
                     <li class="nav-item d-flex">
-                        <a class="nav-link pr-1" href="login">
+                        <a class="nav-link pr-1" href="/EPT_Beauty/front_end/login/">
                             <i class="fa fa-user"></i>
                             Login
                         </a>
                         <a class="nav-link pl-1 pr-1">
                             |
                         </a>
-                        <a class="nav-link pl-1" href="register">
+                        <a class="nav-link pl-1" href="/EPT_Beauty/front_end/register/">
                             Register
                         </a>
                     </li>
