@@ -36,6 +36,7 @@
             'is_complete' => true,
             'message' => 'product',
             'data' => [
+                'data_count' => count($datas),
                 'page_size' => $pageSize,
                 'hasPrev' => $page > 1,
                 'hasNext' => $page < $lastPage,

@@ -1,6 +1,11 @@
+@media only screen and (max-width: 1080px) {
+    #username {
+        display: none;
+    }
+}
 
 /* กำหนดรูปภาพที่มีขนาดเท่ากันทั้งหมด */
-.card-img-top { 
+.card-img-top {
     object-fit: contain;
     aspect-ratio: 1/1;
 }
@@ -11,30 +16,30 @@
     aspect-ratio: 16/9;
 }
 
-.text-danger{
+.text-danger {
     font-size: 13px;
 }
 
-.save_discount{
+.save_discount {
     margin-left: 4px;
     margin-right: 4px;
     font-size: 11px;
 }
 
-#card-items{
+#card-items {
     gap: 5%
 }
-.card-text-name{
-    font-size:15px;
+
+.card-text-name {
+    font-size: 15px;
     font-weight: bold;
 
 }
 
-.card-description{
-    font-size:13px;
+.card-description {
+    font-size: 13px;
 }
 
-.card-text-price{
+.card-text-price {
     font-weight: bold;
 }
-

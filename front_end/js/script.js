@@ -145,13 +145,14 @@ function alertlogin() {
 }
 
 function searchSubmitEvent(pageStart, perPage, isSearchPage = false) {
-    $('#search-form').submit(function(e) {
+    $('form').submit(function(e) {
         e.preventDefault();
         const search_text = $('#search_text').val();
         const page = pageStart;
         const pageSize = perPage;
 
         if(!isSearchPage) {
+            console.log('xxxx');
             window.location.href = `/EPT_Beauty/front_end/search?search_text=${search_text}&page=${page}&pageSize=${pageSize}`;
         }
 
@@ -224,6 +225,9 @@ function getSearchProduct(search_text, page, pageSize) {
                     $('#card-items').append(tmp);
                 }
             });
+
+            $('#search-count').text(data.data.data_count);
+            $('#search-text-tmp').text(search_text);
 
             buyClickEventSearch();
         }

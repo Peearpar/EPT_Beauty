@@ -46,7 +46,7 @@
                     </ul>
 
                     <!-- SEARCH FORM -->
-                    <form class="form-inline ml-0 ml-md-3 w-100" id="search-form">
+                    <!-- <form class="form-inline ml-0 ml-md-3 w-100" id="search-form">
                         <div class="w-100 input-group input-group-sm">
                             <input class="form-control form-control-navbar" id="search_text" type="search" placeholder="Search" aria-label="Search">
                             <div class="input-group-append">
@@ -55,61 +55,108 @@
                                 </button>
                             </div>
                         </div>
-                    </form>
+                    </form> -->
                 </div>
 
                 <!-- Right navbar links -->
-                <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-5">
-                    <li class="nav-item d-flex" id="not_login">
-                        <a class="nav-link pr-1" href="../login">
+                <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-5" id="not_login">
+
+                    <!-- Navbar Search -->
+                    <li class="nav-item">
+                        <a class="nav-link" data-widget="navbar-search" data-target="#navbar-search1" href="#" role="button">
+                            <i class="fas fa-search"></i>
+                        </a>
+                        <div class="navbar-search-block" id="navbar-search1">
+                            <form class="form-inline" id="search-form">
+                                <div class="input-group input-group-sm">
+                                    <input class="form-control form-control-navbar" id="search_text" type="search" placeholder="Search" aria-label="Search">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-navbar" type="submit">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                        <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+
+                    <li class="nav-item d-flex">
+                        <a class="nav-link pr-1" href="login">
                             <i class="fa fa-user"></i>
                             Login
                         </a>
                         <a class="nav-link pl-1 pr-1">
                             |
                         </a>
-                        <a class="nav-link pl-1" href="../register">
+                        <a class="nav-link pl-1" href="register">
                             Register
                         </a>
                     </li>
-                    <!-- Login Dropdowm Menu -->
-                    <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-5" id="is_login">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link" data-toggle="dropdown" id="d_name" href="#">
-                                <i class="fa fa-user"></i>
-                                Peearpar
+                </ul>
+
+                <!-- Login Dropdowm Menu -->
+                <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-5" id="is_login">
+
+                    <!-- Navbar Search -->
+                    <li class="nav-item">
+                        <a class="nav-link" data-widget="navbar-search" data-target="#navbar-search1" href="#" role="button">
+                            <i class="fas fa-search"></i>
+                        </a>
+                        <div class="navbar-search-block" id="navbar-search1">
+                            <form class="form-inline" id="search-form">
+                                <div class="input-group input-group-sm">
+                                    <input class="form-control form-control-navbar" id="search_text" type="search" placeholder="Search" aria-label="Search">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-navbar" type="submit">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                        <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" data-toggle="dropdown" id="d_name" href="#">
+                            <i class="fa fa-user"></i>
+                            Peearpar
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                            <a href="#" class="dropdown-item bg-dark">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <p class="text-sm" id="d_email">phusit_sawat@hotmail.com</p>
+                                    </div>
+                                </div>
                             </a>
-                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                                <a href="#" class="dropdown-item bg-dark">
-                                    <div class="media">
-                                        <div class="media-body">
-                                            <p class="text-sm" id="d_email">phusit_sawat@hotmail.com</p>
-                                        </div>
+                            <a href="#" class="dropdown-item">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <p class="text-sm" id="d_credit">credit: 0</p>
                                     </div>
-                                </a>
-                                <a href="#" class="dropdown-item">
-                                    <div class="media">
-                                        <div class="media-body">
-                                            <p class="text-sm" id="d_credit">credit: 0</p>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a href="#" class="dropdown-item" id="logout">
-                                    <div class="media">
-                                        <div class="media-body">
-                                            <p class="text-sm">Log out</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="cart" href="../cart/index.php">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                                <span class="badge badge-danger navbar-badge cart-count">3</span>
+                                </div>
                             </a>
-                        </li>
-                    </ul>
+                            <a href="#" class="dropdown-item" id="logout">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <p class="text-sm">Log out</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="cart" href="/EPT_Beauty/front_end/cart/">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            <span class="badge badge-danger navbar-badge cart-count">3</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -239,7 +286,7 @@
             };
             if (getCookie('token')) { ////เชคว่าถ้ามี token ให้ทำอะไรต่อ
                 $('#not_login').remove(); //// สั่งให้ remove not_login
-                $('#d_name').html('<i class="fa fa-user"></i> ' + getCookie('name'));
+                $('#d_name').html('<i class="fa fa-user"></i> ' + "<span id='username'>" + getCookie('name') + "</span>");
                 $('#d_email').html(getCookie('email'));
                 $('#d_credit').html('credit: ' + numberFormat(getCookie('credit')) + " Baht");
             } else {
@@ -338,6 +385,19 @@
                     user_email: getCookie('email'),
                     product_id: $(this).attr('product-id')
                 }).done(function(data) {
+                    var Toast2 = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 1000
+                    });
+
+                    if (data.is_complete) {
+                        Toast2.fire({
+                            icon: 'success',
+                            title: 'add product on cart'
+                        })
+                    }
                     // console.log(data.is_complete);
 
                     if (!data.is_complete) {
